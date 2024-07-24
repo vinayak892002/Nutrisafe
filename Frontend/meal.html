@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Meal-To-Needy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            color: #6F8BA4;
+            margin-top: 20px;
+        }
+
+        .section {
+            padding: 90px 0;
+            position: relative;
+        }
+
+        .gray-bg {
+            background-color: #f5f5f5;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        img {
+            vertical-align: middle;
+            border-style: none;
+        }
+
+        /* About Me 
+---------------------*/
+        .about-text h3 {
+            font-size: 45px;
+            font-weight: 700;
+            margin: 0 0 6px;
+        }
+
+        @media (max-width: 767px) {
+            .about-text h3 {
+                font-size: 35px;
+            }
+        }
+
+        .about-text h6 {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 767px) {
+            .about-text h6 {
+                font-size: 18px;
+            }
+        }
+
+        .about-text p {
+            font-size: 18px;
+            max-width: 450px;
+        }
+
+        .about-text p mark {
+            font-weight: 600;
+            color: #82ae46;
+        }
+
+        .about-list {
+            padding-top: 10px;
+        }
+
+        .about-list .media {
+            padding: 5px 0;
+        }
+
+        .about-list label {
+            color: black;
+            font-weight: 600;
+            width: 88px;
+            margin: 0;
+            position: relative;
+        }
+
+        .about-list label:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 11px;
+            width: 1px;
+            height: 12px;
+            background: #82ae46;
+            -moz-transform: rotate(15deg);
+            -o-transform: rotate(15deg);
+            -ms-transform: rotate(15deg);
+            -webkit-transform: rotate(15deg);
+            transform: rotate(15deg);
+            margin: auto;
+            opacity: 0.5;
+        }
+
+        .about-list p {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        @media (max-width: 991px) {
+            .about-avatar {
+                margin-top: 30px;
+            }
+        }
+
+        .about-section .counter {
+            padding: 22px 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+        }
+
+        .about-section .counter .count-data {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .about-section .counter .count {
+            font-weight: 700;
+            color: #82ae46;
+            margin: 0 0 5px;
+        }
+
+        .about-section .counter p {
+            font-weight: 600;
+            margin: 0;
+        }
+
+        mark {
+            background-image: linear-gradient(rgba(252, 83, 86, 0.6), rgba(252, 83, 86, 0.6));
+            background-size: 100% 3px;
+            background-repeat: no-repeat;
+            background-position: 0 bottom;
+            background-color: transparent;
+            padding: 0;
+            color: currentColor;
+        }
+
+        .dark-color {
+            color: black;
+        }
+
+        @media (max-width: 767px) {
+            .about-list .media {
+                flex-direction: column;
+                /* Change flex direction to column for smaller screens */
+                align-items: flex-start;
+                /* Align items to the start */
+            }
+
+            .about-list label {
+                margin-bottom: 5px;
+                /* Add spacing between labels */
+            }
+
+            .about-list label:after {
+                right: 0;
+                /* Adjust the position of the pseudo-element to the right */
+            }
+        }
+
+        @media only screen and (orientation: landscape) {
+            .about-list label {
+                width: auto;
+                /* Adjust the width */
+            }
+
+            .about-list label:after {
+                display: none;
+                /* Remove the pseudo-element after */
+            }
+
+            .about-list p {
+                font-size: 14px;
+                /* Adjust the font size */
+                margin-left: 20px;
+                /* Add some margin for better spacing */
+            }
+        }
+
+        .tokens-badge {
+
+            font-size: 14px;
+            padding: 5px 15px;
+            border-radius: 5px;
+
+            color: rgb(0, 0, 0);
+            /* Example text color */
+        }
+
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            /* Optional: Adjust spacing between the boxes */
+            background-color: #f5f5f5;
+            /* Optional: Background color for the row */
+            padding: 20px;
+            /* Optional: Padding for the row */
+        }
+
+        .info-box {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            /* Optional: Add a border to each box */
+            border-radius: 5px;
+            /* Optional: Add border-radius for rounded corners */
+            background-color: #fff;
+            /* Optional: Background color for each box */
+            text-align: center;
+            /* Optional: Center align text */
+        }
+
+        .info-box h2 {
+            margin: 0;
+            /* Remove default margin for the heading */
+            font-weight: bold;
+            /* Make the heading bold */
+            color: rgb(77, 77, 77);
+        }
+
+        .info-box p {
+            margin: 0;
+            /* Remove default margin for paragraphs */
+        }
+
+
+
+        .decrement,
+        .increment {
+            width: 30px;
+            height: 30px;
+            background-color: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        #quantity-value {
+            margin: 0 10px;
+            font-size: 18px;
+        }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+        style="padding: 0 20px 0 20px;" id="ftco-navbar">
+        <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="NutriSafe Logo" style="width: 80px; height: auto;">
+            NutriSafe
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+            aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="community.html" class="nav-link">Community</a></li>
+                <li class="nav-item"><a href="blog.html" class="nav-link">Stores</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="profile.html" class="nav-link">Profile</a></li>
+                <li class="nav-item cta cta-colored"><a href="wishlist.html" class="nav-link"><span
+                            class="icon-shopping_cart"></span>[0]</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        User
+                    </a>
+                    <ul class="dropdown-menu" >
+                        <li><a class="dropdown-item" href="#" style="color: red; font-size: 12px;">LogOut</a></li>
+                        <li><a class="dropdown-item" href="update.html" style="font-size: 12px;">Update Info</a></li>
+                        <li><a class="dropdown-item" href="add.html" style="font-size: 12px;">ADD</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <a href="meal.html" class="token-link">
+        <div style="display: flex; justify-content: flex-end; align-items: center;background-color: #f5f5f5;"
+            href="meal.html">
+            <img src="images/token.png" alt="Description of Image" style="width: 30px; height: 30px;">
+            <span id="tokens-badge" class="tokens-badge">0</span>
+        </div>
+    </a>
+
+    <section class="ftco-section img" style="background-image: url(images/meal.jpg);">
+        <div class="container">
+            <div class="row justify-content-start" style="color:rgb(0, 0, 0); font-size: 15px; font-weight:500;">
+                <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate">
+                    <h2 class="mb-4" style="color:wheat;">Donate a Meal.</h2>
+                    <p>Join a community of changemakers fighting to change that.</p>
+
+                    <div style="display: flex; align-items: center; margin-top: 20px;">
+                        <img src="images/logo.png" alt="Logo" style="width: 100px; height: auto;">
+                        <span style="font-size: 24px; margin-left: 10px;">NUTRISAFE</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- Donate -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 ftco-animate">
+                    <div class="cart-list">
+                        <table class="table">
+
+                            <tbody>
+                                <tr class="text-center" id="meal-row">
+                                    <td class="image-prod">
+                                        <div class="img"
+                                            style="background-image:url(images/thali.avif); border-radius: 50%;"></div>
+                                    </td>
+                                    <td class="product-name">
+                                        <h3>Meal</h3>
+                                        <p>Full Meal , to finish up one's hunger.</p>
+                                    </td>
+                                    <td class="price">
+                                        <span id="price-value">50</span>
+                                        <span class="token-symbol">🪙</span>
+                                    </td>
+                                    <td class="quantity">
+                                        <button class="decrement" onclick="changeQuantity('meal', -1)">-</button>
+                                        <span id="quantity-value">0</span>
+                                        <button class="increment" onclick="changeQuantity('meal', 1)">+</button>
+                                    </td>
+                                    <td class="total">
+                                        <span id="total-value">0</span>
+                                        <span class="token-symbol">🪙</span>
+
+                                </tr>
+
+                                <tr class="text-center" id="grocerykit-row">
+                                    <td class="image-prod">
+                                        <div class="img"
+                                            style="background-image:url(images/groc.jpg); border-radius: 50%;"></div>
+                                    </td>
+                                    <td class="product-name">
+                                        <h3>Grocery Kit</h3>
+                                        <p>Essential groceries for a week's supply.</p>
+                                    </td>
+                                    <td class="price">
+                                        <span id="grocerykit-price">350</span>
+                                        <span class="token-symbol">🪙</span>
+                                    </td>
+                                    <td class="quantity">
+                                        <button class="decrement" onclick="changeQuantity('grocerykit', -1)">-</button>
+                                        <span id="grocerykit-quantity">0</span>
+                                        <button class="increment" onclick="changeQuantity('grocerykit', 1)">+</button>
+                                    </td>
+                                    <td class="total">
+                                        <span id="grocerykit-total">0</span>
+                                        <span class="token-symbol">🪙</span>
+                                    </td>
+                                    
+                                </tr>
+                                <tr class="text-center">
+                                    <td colspan="4"></td>
+                                    <td class="total">
+                                        <strong>Total:</strong>
+                                        <span id="grand-total">0</span>
+                                        <span class="token-symbol">🪙</span>
+                                    </td>
+                                    </td>
+                                    <td><a class="btn btn-primary" style="padding: 6px 7px; font-size: 18px;">Donate</a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <!-- END  ROW -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+    </section>
+
+    <!-- Data -->
+    <div class="info-row">
+        <div class="info-box">
+            <h2 class="count" data-target="7680870">0</h2>
+            <p style="font-weight: 600">Meals served</p>
+            <p>Nutrisafe was established to provide food assistance to the most vulnerable sections of Mumbai's
+                population during the Covid-19 crisis.</p>
+        </div>
+        <div class="info-box">
+            <h2 class="count" data-target="73193">0</h2>
+            <p style="font-weight: 600">Family Grocery kits</p>
+            <p>We provided groceries and essential items to migrant labourers and other vulnerable groups who had access
+                to cooking facilities at home.</p>
+        </div>
+        <div class="info-box">
+            <h2 class="count" data-target="600000">0</h2>
+            <p style="font-weight: 600">Migrant workers served</p>
+            <p>We provided cooked food, water, snacks, masks, and sanitizers at three major Mumbai train stations,
+                serving 284 Shramik Express Trains.</p>
+        </div>
+    </div>
+
+
+
+    <footer class="ftco-footer ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="mouse">
+                    <a href="#" class="mouse-icon">
+                        <div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
+                    </a>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">NutriSafe</h2>
+                        <p>From allergies to preferences, find your perfect aisle with
+                            us.</p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4 ml-md-5">
+                        <h2 class="ftco-heading-2">Menu</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="blog.html" class="py-2 d-block">Shops</a></li>
+                            <li><a href="about.html" class="py-2 d-block">About</a></li>
+                            <li><a href="contact.html" class="py-2 d-block">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Help</h2>
+                        <div class="d-flex">
+                            <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
+                                <li><a href="#" class="py-2 d-block">Terms &amp;
+                                        Conditions</a>
+                                </li>
+                                <li><a href="#" class="py-2 d-block">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Have a Questions?</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="icon icon-map-marker"></span><span class="text">Linking Road, Bandra
+                                        West, Mumbai
+                                        400050</span></li>
+                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+91
+                                            8208877372</span></a></li>
+                                <li><a href="#"><span class="icon icon-envelope"></span><span
+                                            class="text">info@yourdomain.com</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- loader -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="js/google-map.js"></script>
+    <script src="js/main.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        // DATA
+        document.addEventListener('DOMContentLoaded', function () {
+            const counters = document.querySelectorAll('.count');
+            const speed = 1000; // Adjust the speed as needed
+
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText.replace(/,/g, ''); // Remove commas
+                    const increment = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = (count + increment).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        setTimeout(updateCount, 1);
+                    } else {
+                        counter.innerText = target.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    }
+                };
+
+                updateCount();
+            });
+        });
+
+        // quantity
+        function changeQuantity(item, quan) {
+            let quantityValueElement, priceValueElement, totalValueElement;
+
+            if (item === 'meal') {
+                quantityValueElement = document.getElementById("quantity-value");
+                priceValueElement = document.getElementById("price-value");
+                totalValueElement = document.getElementById("total-value");
+            } else if (item === 'grocerykit') {
+                quantityValueElement = document.getElementById("grocerykit-quantity");
+                priceValueElement = document.getElementById("grocerykit-price");
+                totalValueElement = document.getElementById("grocerykit-total");
+            }
+
+            let currentQuantity = parseInt(quantityValueElement.innerText);
+            const price = parseInt(priceValueElement.innerText);
+
+            currentQuantity += quan;
+
+            if (currentQuantity < 1) {
+                currentQuantity = 0; // Prevent the quantity from going below 1
+            }
+
+            const total = currentQuantity * price;
+
+            quantityValueElement.innerText = currentQuantity;
+            totalValueElement.innerText = total;
+            updateGrandTotal()
+        }
+        function updateGrandTotal() {
+            const mealTotal = parseInt(document.getElementById('total-value').innerText);
+            const groceryKitTotal = parseInt(document.getElementById('grocerykit-total').innerText);
+            const grandTotal = mealTotal + groceryKitTotal;
+
+            document.getElementById('grand-total').innerText = grandTotal;
+        }
+    </script>
+</body>
+
+</html>
