@@ -22,7 +22,7 @@ const upload = multer({ storage: storage });
 const dbConfig = {
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: '12345',
   database: 'nutrisafe_db'
 };
 
