@@ -245,6 +245,7 @@
         <li class="nav-item"><a href="profile.html" class="nav-link">Profile</a></li>
         <li class="nav-item cta cta-colored"><a href="wishlist.html" class="nav-link"><span
               class="icon-shopping_cart"></span>[0]</a></li>
+        <li class="nav-item"><a href="orders.html" class="nav-link">Orders</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             User
@@ -271,39 +272,37 @@
         <div class="col-lg-6">
           <div class="about-text go-to">
             <h3 id="user-name" class="dark-color">User</h3>
-            <p>Hello! I'm on a journey to maintain a healthy lifestyle and make informed food choices. NutriSafe helps
-              me navigate through a variety of products, considering my dietary preferences and restrictions. I have
-              specific allergies such as nuts and soy, so it's essential for me to find products that are free from
-              these allergens.</p>
-
+            <p id="user-info">Hello! I'm on a journey to maintain a healthy lifestyle and make informed food choices.
+              NutriSafe helps me navigate through a variety of products, considering my dietary preferences and
+              restrictions. I have specific allergies such as nuts and soy, so it's essential for me to find products
+              that are free from these allergens...</p>
             <div class="row about-list">
               <div class="col-md-6">
                 <div class="media">
                   <label>Name</label>
-                  <p id="user-name">Vinayak Chidrawar</p>
+                  <p id="username">Loading...</p>
                 </div>
                 <div class="media">
                   <label>Age</label>
-                  <p id="user-age">22 Yr</p>
+                  <p id="user-age">Loading...</p>
                 </div>
-
                 <div class="media">
-                  <label>Address</label>
-                  <p id="user-address">Mumbai, India</p>
+                  <label>City</label>
+                  <p id="user-city">Loading...</p>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="media">
                   <label>Gender</label>
-                  <p id="user-gender">Male</p>
+                  <p id="user-gender">Loading...</p>
                 </div>
                 <div class="media">
                   <label>E-mail</label>
-                  <p id="user-email"><a href="mailto:vinayak@example.com">vinayak@example.com</a></p>
+                  <p id="user-email"><a href="#">Loading...</a></p>
                 </div>
                 <div class="media">
                   <label>Phone</label>
-                  <p id="user-phone">820-885-3321</p>
+                  <p id="user-phone">Loading...</p>
                 </div>
               </div>
             </div>
@@ -406,7 +405,44 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript">
 
+document.addEventListener("DOMContentLoaded", function () {
+  // Fetch user data from the API or database
+  fetch('http://localhost:3000/api/getUserProfile') // Replace with your API endpoint
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('User data received:', data); // Log data to check the structure
+
+      if (data) {
+        // Update the user information
+        document.getElementById('user-name').textContent = data.name || "N/A";
+        document.getElementById('username').textContent = data.name || "N/A";
+        document.getElementById('user-address').textContent = data.address || "N/A";
+        document.getElementById('user-age').textContent = `${data.age || "N/A"} Yr`;
+        document.getElementById('user-city').textContent = data.city || "N/A";
+        document.getElementById('user-gender').textContent = data.gender || "N/A";
+        document.getElementById('user-email').innerHTML = `<a href="mailto:${data.email}">${data.email}</a>` || "N/A";
+        document.getElementById('user-phone').textContent = data.contact || "N/A"; // Ensure field names match
+
+        // Update the profile image
+        if (data.profileImage) {
+          document.getElementById('profile-image').src = data.profileImage;
+        }
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching user data:', error);
+    });
+});
+
+
+
   </script>
+
 </body>
 
 </html>

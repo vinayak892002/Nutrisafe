@@ -57,36 +57,39 @@
   <link rel="stylesheet" href="css/flaticon.css">
   <link rel="stylesheet" href="css/icomoon.css">
   <link rel="stylesheet" href="css/style.css">
-<style>/* Example CSS */
-  /* Container that holds all restaurant entries */
-#restaurants-container {
-  width: 100%;
-}
+  <style>
+    /* Example CSS */
+    /* Container that holds all restaurant entries */
+    #restaurants-container {
+      width: 100%;
+    }
 
-/* Each restaurant entry */
-.col-12 {
-  width: 100%; /* Full width of its container */
-  margin-bottom: 20px; /* Space between entries */
-}
+    /* Each restaurant entry */
+    .col-12 {
+      width: 100%;
+      /* Full width of its container */
+      margin-bottom: 20px;
+      /* Space between entries */
+    }
 
-.blog-entry {
-  display: flex;
-  align-items: stretch;
-  /* border: 1px solid #ddd;  */
-  /* padding: 20px; */
-}
- .block-20 {
+    .blog-entry {
+      display: flex;
+      align-items: stretch;
+      /* border: 1px solid #ddd;  */
+      /* padding: 20px; */
+    }
 
-  background-size: cover;
-  background-position: center;
-  border-radius: 20px;
-} */
+    .block-20 {
 
-.text {
-  flex: 1;
-  padding: 20px;
-}
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px;
+    }
 
+    */ .text {
+      flex: 1;
+      padding: 20px;
+    }
   </style>
 </head>
 
@@ -114,6 +117,7 @@
 
         <li class="nav-item cta cta-colored"><a href="wishlist.html" class="nav-link"><span
               class="icon-shopping_cart"></span>[0]</a></li>
+        <li class="nav-item"><a href="orders.html" class="nav-link">Orders</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             User
@@ -143,15 +147,15 @@
 
   <section class="ftco-section ftco-degree-bg">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12 ftco-animate fadeInUp ftco-animated">
-                <div class="row" id="restaurants-container">
-                    <!-- Restaurant data will be dynamically inserted here -->
-                </div>
-            </div>
+      <div class="row">
+        <div class="col-lg-12 ftco-animate fadeInUp ftco-animated">
+          <div class="row" id="restaurants-container">
+            <!-- Restaurant data will be dynamically inserted here -->
+          </div>
         </div>
+      </div>
     </div>
-</section>
+  </section>
 
 
 
@@ -219,7 +223,7 @@
 
 
 
- 
+
 
 
 
@@ -238,73 +242,38 @@
   <script src="js/scrollax.min.js"></script>
   <script src="js/main.js"></script>
   <script>
-    // JavaScript code to fetch and display restaurant data
-    //     async function fetchRestaurants() {
-    //       try {
-    //         const response = await fetch('http://localhost:3000/api/getRestaurants');
-    //         const data = await response.json();
 
-    //         if (data.success) {
-    //       const restaurantsContainer = document.getElementById('restaurants-container');
-    //       data.data.forEach(restaurant => {
-    //         const restaurantElement = document.createElement('div');
-    //         restaurantElement.classList.add('col-md-12', 'd-flex', 'ftco-animate');
-    //         restaurantElement.innerHTML = `
-    //           <div class="blog-entry align-self-stretch d-md-flex">
-    //             <a href="blog-single.html" class="block-20" 
-    //                style="background-image: url('${restaurant.image}'); border-radius: 20px;">
-    //             </a>
-    //             <div class="text d-block pl-md-4">
-    //               <div class="meta mb-3"></div>
-    //               <h3 class="heading"><a href="#">${restaurant.name}</a></h3>
-    //               <p><i class="fas fa-map-marker-alt mr-2"></i>${restaurant.address}</p>
-    //               <p>Opens: ${restaurant.open}</p>
-    //               <p>Contact No: ${restaurant.contact}</p>
-    //               <a href="${restaurant.shopLink}" class="btn btn-primary py-2 px-3">Shop</a>
-    //             </div>
-    //           </div>
-    //         `;
-    //         restaurantsContainer.appendChild(restaurantElement);
-    //       });
-    //     }
-    //   } catch (error) {
-    //     console.error('Error fetching restaurant data:', error);
-    //   }
-    // }
-
-    // // Call the function to fetch and display restaurants
-    // fetchRestaurants();
     document.addEventListener('DOMContentLoaded', function () {
-  async function fetchRestaurants() {
-    const restaurantsContainer = document.getElementById('restaurants-container');
+      async function fetchRestaurants() {
+        const restaurantsContainer = document.getElementById('restaurants-container');
 
-    if (!restaurantsContainer) {
-      console.error('Restaurants container not found.');
-      return;
-    }
+        if (!restaurantsContainer) {
+          console.error('Restaurants container not found.');
+          return;
+        }
 
-    restaurantsContainer.innerHTML = '<p>Loading restaurants...</p>';
+        restaurantsContainer.innerHTML = '<p>Loading restaurants...</p>';
 
-    try {
-      const response = await fetch('http://localhost:3000/api/getRestaurants');
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+        try {
+          const response = await fetch('http://localhost:3000/api/getRestaurants');
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
 
-      const data = await response.json();
-      console.log('Data parsed:', data);
+          const data = await response.json();
+          console.log('Data parsed:', data);
 
-      if (data.success) {
-        console.log('Restaurant data:', data.data);
+          if (data.success) {
+            console.log('Restaurant data:', data.data);
 
-        // Clear the loading message
-        restaurantsContainer.innerHTML = '';
+            // Clear the loading message
+            restaurantsContainer.innerHTML = '';
 
-        data.data.forEach(restaurant => {
-          const restaurantElement = document.createElement('div');
-          restaurantElement.classList.add('col-12', 'mb-4'); // Full width for each entry
+            data.data.forEach(restaurant => {
+              const restaurantElement = document.createElement('div');
+              restaurantElement.classList.add('col-12', 'mb-4'); // Full width for each entry
 
-          restaurantElement.innerHTML = `
+              restaurantElement.innerHTML = `
             <div class="blog-entry align-self-stretch d-md-flex">
               <a href="${restaurant.shopLink}" class="block-20" style="background-image: url('${restaurant.image}'); background-color:black; border-radius: 20px;"></a>
               <div class="text d-block pl-md-4" style="padding-top: 20px;">
@@ -312,26 +281,26 @@
                 <p class="restaurant-address"><i class="fas fa-map-marker-alt mr-2"></i>${restaurant.address}</p>
                 <p class="restaurant-opening-time">Opens: ${restaurant.open}</p>
                 <p class="restaurant-contact">Contact No: ${restaurant.contact}</p>
-                <a href="${restaurant.shopLink}" class="btn btn-primary py-2 px-3">Shop</a>
+                  <a href="menu.html?shop=${encodeURIComponent(restaurant.name)}" class="btn btn-primary py-2 px-3">Shop</a>
               </div>
             </div>
           `;
-          restaurantsContainer.appendChild(restaurantElement);
-        });
+              restaurantsContainer.appendChild(restaurantElement);
+            });
 
-      } else {
-        console.error('Data success is false:', data);
-        restaurantsContainer.innerHTML = '<p>Failed to load restaurant data.</p>';
+          } else {
+            console.error('Data success is false:', data);
+            restaurantsContainer.innerHTML = '<p>Failed to load restaurant data.</p>';
+          }
+        } catch (error) {
+          console.error('Error fetching restaurant data:', error);
+          restaurantsContainer.innerHTML = '<p>Error loading restaurant data. Please try again later.</p>';
+        }
       }
-    } catch (error) {
-      console.error('Error fetching restaurant data:', error);
-      restaurantsContainer.innerHTML = '<p>Error loading restaurant data. Please try again later.</p>';
-    }
-  }
 
-  // Call the function to fetch and display restaurants
-  fetchRestaurants();
-});
+      // Call the function to fetch and display restaurants
+      fetchRestaurants();
+    });
 
 
 

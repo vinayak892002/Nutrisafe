@@ -68,7 +68,7 @@
             padding-top: 20px;
             font-size: 12px;
         }
-        
+
 
         .form-outline input[type="text"]:focus,
         .form-outline input[type="email"]:focus,
@@ -85,6 +85,7 @@
             left: 0;
             transition: 0.2s ease all;
         }
+
         .form-outline .form-control {
             min-height: auto;
             padding-top: 20px;
@@ -155,13 +156,15 @@
                 <li class="nav-item"><a href="profile.html" class="nav-link">Profile</a></li>
                 <li class="nav-item cta cta-colored"><a href="wishlist.html" class="nav-link"><span
                             class="icon-shopping_cart"></span>[0]</a></li>
+                <li class="nav-item"><a href="orders.html" class="nav-link">Orders</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         User
                     </a>
-                    <ul class="dropdown-menu" >
-                        <li><a class="dropdown-item" href="login.html" style="color: red; font-size: 12px;">LogOut</a></li>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="login.html" style="color: red; font-size: 12px;">LogOut</a>
+                        </li>
                         <li><a class="dropdown-item" href="update.html" style="font-size: 12px;">Update Info</a></li>
                         <li><a class="dropdown-item" href="add.html" style="font-size: 12px;">ADD</a></li>
                     </ul>
@@ -217,7 +220,8 @@
                         </div>
                     </div>
                     <div class="col">
-                        <select class="form-select" id="gender" name="gender" aria-label="Gender" required style="font-size: 12px;">
+                        <select class="form-select" id="gender" name="gender" aria-label="Gender" required
+                            style="font-size: 12px;">
                             <option selected disabled>Gender</option>
                             <option value="female">Female</option>
                             <option value="male">Male</option>
@@ -262,7 +266,8 @@
                 </div>
 
                 <div style="display: flex; justify-content: center;">
-                    <button type="submit" class="btn btn-block mb-3" style="background-color: #629f0d; color: white; width: fit-content;">Update</button>
+                    <button type="submit" class="btn btn-block mb-3"
+                        style="background-color: #629f0d; color: white; width: fit-content;">Update</button>
                 </div>
             </form>
         </div>
@@ -367,7 +372,7 @@
         $(document).ready(function () {
             $('#updateForm').on('submit', function (e) {
                 e.preventDefault();
-                
+
                 const formData = {
                     name: $('#name').val(),
                     age: $('#age').val(),
@@ -398,7 +403,7 @@
                         alert('An error occurred: ' + xhr.responseText);
                     }
                 });
-                
+
             });
         });
     </script>

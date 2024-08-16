@@ -24,11 +24,49 @@
 
 	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
 	<link rel="stylesheet" href="css/jquery.timepicker.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+		integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/icomoon.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
+		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="css/animate.css">
+
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="css/magnific-popup.css">
+
+	<link rel="stylesheet" href="css/aos.css">
+
+	<link rel="stylesheet" href="css/ionicons.min.css">
+
+	<link rel="stylesheet" href="css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="css/jquery.timepicker.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+		integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="stylesheet" href="css/flaticon.css">
+	<link rel="stylesheet" href="css/icomoon.css">
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		.img {
+			width: 100px;
+			/* Example width */
+			height: 100px;
+			/* Example height */
+			background-size: cover;
+			background-position: center;
+		}
+	</style>
 </head>
 
 <body class="goto-here">
@@ -77,13 +115,16 @@
 				<li class="nav-item"><a href="profile.html" class="nav-link">Profile</a></li>
 				<li class="nav-item cta cta-colored"><a href="wishlist.html" class="nav-link"><span
 							class="icon-shopping_cart"></span>[0]</a></li>
+				<li class="nav-item"><a href="orders.html" class="nav-link">Orders</a></li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
 						aria-expanded="false">
 						User
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#" style="color: red; font-size: 12px;">LogOut</a></li>
+						<li><a id="l" class="dropdown-item" href="#" style="color: red; font-size: 12px;">LogOut</a>
+						</li>
+
 						<li><a class="dropdown-item" href="update.html" style="font-size: 12px;">Update Info</a></li>
 						<li><a class="dropdown-item" href="add.html" style="font-size: 12px;">ADD</a></li>
 					</ul>
@@ -115,88 +156,44 @@
 							<thead class="thead-primary">
 								<tr class="text-center">
 									<th>&nbsp;</th>
-									<th>Product List</th>
-									<th>&nbsp;</th>
+									<th>Product </th>
+									<th>Product Name</th>
 									<th>Price</th>
 									<th>Quantity</th>
 									<th>Total</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr class="text-center">
-									<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+							<tbody id="cart-items">
 
-									<td class="image-prod">
-										<div class="img" style="background-image:url(images/biryani.avif);"></div>
-									</td>
 
-									<td class="product-name">
-										<h3>Biryani</h3>
-										<p>Far far away, behind the word mountains, far from the countries</p>
-									</td>
-
-									<td class="price">$4.90</td>
-
-									<td class="quantity">
-										<div class="input-group mb-3">
-											<input type="text" name="quantity"
-												class="quantity form-control input-number" value="1" min="1" max="100">
-										</div>
-									</td>
-
-									<td class="total">$4.90</td>
-								</tr><!-- END TR-->
-
-								<tr class="text-center">
-									<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-									<td class="image-prod">
-										<div class="img" style="background-image:url(images/burger.avif);"></div>
-									</td>
-
-									<td class="product-name">
-										<h3>Burger</h3>
-										<p>Far far away, behind the word mountains, far from the countries</p>
-									</td>
-
-									<td class="price">$15.70</td>
-
-									<td class="quantity">
-										<div class="input-group mb-3">
-											<input type="text" name="quantity"
-												class="quantity form-control input-number" value="1" min="1" max="100">
-										</div>
-									</td>
-
-									<td class="total">$15.70</td>
-								</tr><!-- END TR-->
-
-								<tr class="text-center">
-									<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-
-									<td class="image-prod">
-										<div class="img" style="background-image:url(images/rolls.avif);"></div>
-									</td>
-
-									<td class="product-name">
-										<h3>Rolls</h3>
-										<p>Far far away, behind the word mountains, far from the countries</p>
-									</td>
-
-									<td class="price">$15.70</td>
-
-									<td class="quantity">
-										<div class="input-group mb-3">
-											<input type="text" name="quantity"
-												class="quantity form-control input-number" value="1" min="1" max="100">
-										</div>
-									</td>
-
-									<td class="total">$15.70</td>
-								</tr><!-- END TR-->
+								<!-- // cart items -->
 
 
 							</tbody>
+							<tr class="text-center">
+								<td colspan="3"></td>
+								<td>
+									<input type="text" id="coupon-code" class="form-control"
+										placeholder="Enter coupon code" style="border-radius: 5px; text-align: center;">
+								</td>
+								<td>
+									<a id="apply-coupon" class="btn "
+										style="color: rgb(0, 0, 0); background-color: #82ae46;">Apply</a>
+								</td>
+							</tr>
+
+							<tr class="text-center">
+								<td colspan="3"></td>
+								<td class="total">
+									<strong>Total:</strong>
+									<span id="grand-total">0</span>
+								</td>
+
+								<td>
+									<a class="btn btn-primary py-2 px-3" style="color: black;">Order</a>
+								</td>
+								<td></td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -208,20 +205,22 @@
 		<div class="container py-4">
 			<div class="row d-flex justify-content-center py-5">
 				<div class="col-md-6">
-					<h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
+					<h2 style="font-size: 22px;" class="mb-0">Subscribe to our Newsletter</h2>
 					<span>Get e-mail updates about our latest shops and special offers</span>
 				</div>
 				<div class="col-md-6 d-flex align-items-center">
-					<form action="#" class="subscribe-form">
-						<div class="form-group d-flex">
-							<input type="text" class="form-control" placeholder="Enter email address">
-							<input type="submit" value="Subscribe" class="submit px-3">
+					<form id="subscribe-form" class="subscribe-form">
+						<div class="form-group d-flex" style="  border-radius: 25px;">
+							<input type="text" id="email" class="form-control" placeholder="Enter email address">
+							<input type="submit" value="Subscribe" class="submit px-3" style="  border-radius: 25px;">
 						</div>
+						<small id="email-error" style="color: red;"></small>
 					</form>
 				</div>
 			</div>
 		</div>
 	</section>
+
 	<footer class="ftco-footer ftco-section">
 		<div class="container">
 			<div class="row">
@@ -312,6 +311,7 @@
 		</svg></div>
 
 
+
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="js/popper.min.js"></script>
@@ -325,46 +325,330 @@
 	<script src="js/jquery.animateNumber.min.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/scrollax.min.js"></script>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
 
 	<script>
 		$(document).ready(function () {
+			var quantityInput = $('#quantity');
 
-			var quantitiy = 0;
 			$('.quantity-right-plus').click(function (e) {
-
-				// Stop acting like a button
 				e.preventDefault();
-				// Get the field name
-				var quantity = parseInt($('#quantity').val());
-
-				// If is not undefined
-
-				$('#quantity').val(quantity + 1);
-
-
-				// Increment
-
+				var quantity = parseInt(quantityInput.val(), 10);
+				quantityInput.val(quantity + 1);
 			});
 
 			$('.quantity-left-minus').click(function (e) {
-				// Stop acting like a button
 				e.preventDefault();
-				// Get the field name
-				var quantity = parseInt($('#quantity').val());
-
-				// If is not undefined
-
-				// Increment
+				var quantity = parseInt(quantityInput.val(), 10);
 				if (quantity > 0) {
-					$('#quantity').val(quantity - 1);
+					quantityInput.val(quantity - 1);
 				}
 			});
-
 		});
+
+		async function fetchUsername() {
+			try {
+				const response = await fetch('http://localhost:3000/api/getUsername');
+				if (!response.ok) {
+					throw new Error(`Network response was not ok: ${response.statusText}`);
+				}
+				const data = await response.json();
+
+				if (data.success && data.username) {
+					return data.username;
+				} else {
+					console.error('Error fetching username:', data.message || 'No username returned');
+					return null;
+				}
+			} catch (error) {
+				console.error('Error:', error);
+				return null;
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', async function () {
+			const username = await fetchUsername();
+			if (!username) {
+				console.error('Username could not be fetched.');
+				return;
+			}
+
+			const cartItemsContainer = document.getElementById('cart-items');
+			const grandTotalElement = document.getElementById('grand-total');
+
+			try {
+				const response = await fetch(`http://localhost:3000/api/getCartItems/${username}`);
+				if (!response.ok) {
+					throw new Error(`Network response was not ok: ${response.statusText}`);
+				}
+				const data = await response.json();
+				console.log('Cart items data:', data); // Log data for debugging
+
+				if (data.success) {
+					let grandTotal = 0;
+
+					data.data.forEach(item => {
+						const itemTotal = item.quantity * item.price;
+						grandTotal += itemTotal;
+
+						const tr = document.createElement('tr');
+						tr.classList.add('text-center');
+						tr.setAttribute('data-id', item.cart_item_id); // Ensuring the item ID is set
+
+						tr.innerHTML = `
+                    <td class="product-remove">
+                        <a href="#" class="remove-item" data-menu-item="${item.menu_item}">
+                            <span class="ion-ios-close"></span>
+                        </a>
+                    </td>
+                    <td class="image-prod">
+                        <div class="img" style="background-image: url('${item.food_image}'); border-radius:50%"></div>
+                    </td>
+                    <td class="product-name">
+                        <h3>${item.menu_item}</h3>
+                    </td>
+                    <td class="price">₹${item.price.toFixed(2)}</td>
+                    <td class="quantity">
+                        <div class="input-group mb-3">
+                            <input type="text" name="quantity" class="quantity form-control input-number" value="${item.quantity}" min="1" max="100">
+                        </div>
+                    </td>
+                    <td class="total">₹${itemTotal.toFixed(2)}</td>
+                `;
+
+						cartItemsContainer.appendChild(tr);
+					});
+
+					grandTotalElement.textContent = `₹${grandTotal.toFixed(2)}`;
+
+					document.querySelectorAll('.remove-item').forEach(button => {
+						button.addEventListener('click', function (e) {
+							e.preventDefault();
+							const tr = this.closest('tr');
+							const itemId = tr.getAttribute('data-id');
+							const menuItem = this.getAttribute('data-menu-item');
+
+							if (!itemId || !menuItem) {
+								console.error('Item ID or menuItem is missing.');
+								return;
+							}
+
+							fetch(`http://localhost:3000/api/removeCartItem/${username}/${encodeURIComponent(menuItem)}`, {
+								method: 'DELETE'
+							})
+								.then(response => response.json())
+								.then(data => {
+									if (data.success) {
+										tr.remove();
+										grandTotal -= data.removedItemTotal;
+										grandTotalElement.textContent = `$${grandTotal.toFixed(2)}`;
+									} else {
+										console.error('Error removing item:', data.message);
+									}
+								})
+								.catch(error => console.error('Error:', error));
+						});
+					});
+				} else {
+					console.error('Error fetching cart items:', data.message);
+				}
+			} catch (error) {
+				console.error('Error:', error);
+			}
+
+			const orderButton = document.querySelector('.btn-primary');
+
+			// Add click event listener to the "Order" button
+			if (orderButton) {
+
+				fetch('http://localhost:3000/api/getUsername')
+					.then(response => response.json())
+					.then(data => {
+						if (data.success) {
+							const username = data.username;
+
+							// Add click event listener for the order button
+							orderButton.addEventListener('click', function (e) {
+								e.preventDefault();
+
+								const cartItems = [];
+								document.querySelectorAll('#cart-items tr').forEach(row => {
+									const itemId = row.getAttribute('data-id');
+									const itemName = row.querySelector('.product-name h3').textContent;
+									const itemQuantity = parseInt(row.querySelector('.quantity input').value, 10);
+									const itemPrice = parseFloat(row.querySelector('.price').textContent.replace('$', ''));
+									const itemTotal = itemQuantity * itemPrice;
+
+
+									cartItems.push({
+										id: itemId,
+										name: itemName,
+										quantity: itemQuantity,
+										price: itemPrice,
+										total: itemTotal
+									});
+								});
+
+								const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace('$', ''));
+
+								// Calculate tokens to add
+								const tokensToAdd = Math.floor(grandTotal / 100) * 5;
+
+								const orderData = {
+									username: username,
+									items: cartItems,
+									grandTotal: grandTotal,
+									tokensToAdd: tokensToAdd
+								};
+
+								console.log('Order Data:', orderData);
+
+								fetch('http://localhost:3000/api/placeOrder', {
+									method: 'POST',
+									headers: {
+										'Content-Type': 'application/json'
+									},
+									body: JSON.stringify(orderData)
+								})
+									.then(response => response.json())
+									.then(data => {
+										if (data.success) {
+											alert('Order placed successfully!');
+											// window.location.href = '/order-confirmation';
+											window.location.reload();
+										} else {
+											alert('Error placing order: ' + data.message);
+										}
+									})
+									.catch(error => console.error('Error:', error));
+							});
+						} else {
+							console.error('Failed to fetch username:', data.message);
+						}
+					})
+					.catch(error => console.error('Error fetching username:', error));
+			}
+
+			document.getElementById('l').addEventListener('click', function (event) {
+				event.preventDefault(); // Prevent the default link behavior
+
+				// Make a POST request to the logout endpoint
+				fetch('http://localhost:3000/api/out', { // Adjust URL if necessary
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				})
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Network response was not ok');
+						}
+						return response.json();
+					})
+					.then(data => {
+						if (data.success) {
+							// Optionally, redirect the user or perform other actions on success
+							window.location.href = '/Frontend/login.html'; // Redirect to login page or homepage
+						} else {
+							// Handle errors
+							alert('Logout failed: ' + data.message);
+						}
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						alert('Logout failed due to an error');
+					});
+			});
+		});
+
+
+		document.getElementById('subscribe-form').addEventListener('submit', function (e) {
+			e.preventDefault();
+
+			const email = document.getElementById('email').value;
+			const emailError = document.getElementById('email-error');
+
+			// Email validation regex
+			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+			if (!emailPattern.test(email)) {
+				emailError.textContent = 'Please enter a valid email address.';
+			} else {
+				emailError.textContent = '';
+
+				// Send email to the server for processing
+				fetch('http://localhost:3000/api/sendConfirmationEmail', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ email: email })
+				})
+					.then(response => response.json())
+					.then(data => {
+						if (data.success) {
+							alert('A confirmation email has been sent to your address!');
+						} else {
+							alert('Error: ' + data.message);
+						}
+					})
+					.catch(error => console.error('Error:', error));
+			}
+		});
+		// discount
+		document.getElementById('apply-coupon').addEventListener('click', function () {
+    const couponCode = document.getElementById('coupon-code').value.trim();
+
+    if (couponCode === "") {
+        alert("Please enter a coupon code.");
+        return;
+    }
+
+    // Fetch the current username
+    fetch('http://localhost:3000/api/getUsername')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const username = data.username;
+
+                // Get the current grand total from the displayed value
+                const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace('$', ''));
+
+                // Apply the coupon using the fetched username and current grand total
+                fetch('http://localhost:3000/api/applyCoupon', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        couponCode: couponCode,
+                        username: username,
+                        grandTotal: grandTotal // Send the current grand total to the server
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update the grand total with the new value returned from the server
+                        document.getElementById('grand-total').textContent = `$${data.newTotal}`;
+                        alert('Coupon applied successfully!');
+                    } else {
+                        alert(data.message); // Display the error message from the backend
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                alert('Failed to fetch username: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+
+
 	</script>
 
 </body>

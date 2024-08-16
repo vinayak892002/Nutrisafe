@@ -1,0 +1,61 @@
+       //       document.addEventListener('DOMContentLoaded', function () {
+        //     // Fetch the username from the API
+        //     fetch('http://localhost:3000/api/getUsername')
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 throw new Error('Network response was not ok');
+        //             }
+        //             return response.json();
+        //         })
+        //         .then(data => {
+        //             if (data.success && data.username) {
+        //                 const username = data.username;
+
+        //                 // Fetch orders for the retrieved username
+        //                 return fetch(`http://localhost:3000/api/getUserOrders/${username}`);
+        //             } else {
+        //                 throw new Error('Username not found');
+        //             }
+        //         })
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 throw new Error('Network response was not ok');
+        //             }
+        //             return response.json();
+        //         })
+        //         .then(data => {
+        //             const ordersSection = document.getElementById('ordersSection');
+
+        //             if (data.orders && data.orders.length > 0) {
+        //                 data.orders.forEach(order => {
+        //                     const orderDiv = document.createElement('div');
+        //                     orderDiv.className = 'order-item mb-4 p-3 bg-white border rounded';
+
+        //                     const orderTitle = document.createElement('h4');
+        //                     orderTitle.textContent = `Order #${order.id} - Total: ₹${order.grand_total.toFixed(2)}`;
+        //                     orderDiv.appendChild(orderTitle);
+
+        //                     const itemsList = document.createElement('ul');
+        //                     itemsList.className = 'list-unstyled';
+        //                     order.items.forEach(item => {
+        //                         const itemLi = document.createElement('li');
+        //                         itemLi.textContent = `${item.item_name} (x${item.quantity}) - ₹${item.total.toFixed(2)}`;
+        //                         itemsList.appendChild(itemLi);
+        //                     });
+
+        //                     orderDiv.appendChild(itemsList);
+        //                     ordersSection.appendChild(orderDiv);
+        //                 });
+        //             } else {
+        //                 const emptyMessage = document.createElement('p');
+        //                 emptyMessage.textContent = 'No orders found.';
+        //                 ordersSection.appendChild(emptyMessage);
+        //             }
+        //         })
+        //         .catch(error => console.error('Error:', error));
+        // });
+	// 	<!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	// 	<a class="dropdown-item" href="#">Action</a>
+	// 	<a class="dropdown-item" href="#">Another action</a>
+	// 	<a class="dropdown-item" href="#">Something else here</a>
+	// </div> -->

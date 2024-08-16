@@ -145,6 +145,21 @@
             font-size: 14px;
             border-bottom: 1px solid #ced4da;
         }
+
+        .decrement,
+        .increment {
+            width: 30px;
+            height: 30px;
+            background-color: #ffffff;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        #quantity-value {
+            margin: 0 10px;
+            font-size: 18px;
+        }
     </style>
 </head>
 
@@ -188,111 +203,47 @@
     </nav>
 
     <!-- END nav -->
-    <section class="ftco-section img" style="background-image: url(images/add.webp);">
+    <section class="ftco-section img" id="shop-background">
         <div class="container">
-            <div class="row justify-content-start" style="color:wheat;">
+            <div class="row justify-content-start" style="color:rgb(251 255 204)">
                 <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate">
-                    <h2 class="mb-4" style="color:wheat;"> We've got your preferences covered.</h2>
-                    <p>Navigating a world of choices, we're here to guide you through the
-                        aisles of safe
-                        and delightful options.</p>
+                    <h2 class="mb-4" style="color:rgb(251 255 204)"> Looking for something to eat.</h2>
+                    <p>Order Now.</p>
                     <div style="display: flex; align-items: center; margin-top: 20px;">
-                        <img src="images/logo.png" alt="Logo" style="width: 100px; height: auto;">
-                        <span style="font-size: 24px; margin-left: 10px;">NUTRISAFE</span>
+                        <img src="images/logo.png" alt="Logo" style="width: 100px; height: auto;visibility: hidden;">
+                        <span style="font-size: 24px; margin-left: 10px; color: transparent;">NUTRISAFE</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <br>
+    <section class="ftco-section ftco-cart">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 ftco-animate">
+                    <div class="cart-list">
+                        <table class="table">
+                            <thead class="thead-primary">
+                                <tr class="text-center">
+                                    <th>&nbsp;</th>
+                                    <th>Product </th>
+                                    <th>Product Name</th>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 button-container">
-                <button class="btn btn-black py-2 px-5" style="margin-bottom: 15px;"
-                    onclick="toggleForm('shopForm')">Add Restaurant</button>
-                <button class="btn btn-black py-2 px-5" style="margin-bottom: 15px;"
-                    onclick="toggleForm('menuForm')">Add Menu</button>
-            </div>
-            <div class="col-md-6 form-container" id="shopForm" style="display: none;">
-                <form class="justify-content-end" id="shopFormElement" onsubmit="submitShopForm(event)">
-                    <div class="form-group">
-                        <label for="shopName">Shop Name:</label>
-                        <input type="text" class="form-control" id="shopName" placeholder="Enter shop name" required>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Add</th>
+                                </tr>
+                            </thead>
+                            <tbody id="menu-items-container">
+                                <!-- Menu Items form db -->
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label for="shopAddress">Shop Address:</label>
-                        <input type="text" class="form-control" id="shopAddress" placeholder="Enter shop address"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="shopOpens">Shop Opens Time:</label>
-                        <input type="text" class="form-control" id="shopOpens" placeholder="Enter shop opens time"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="shopClose">Shop Close Time:</label>
-                        <input type="text" class="form-control" id="shopClose" placeholder="Enter shop close time"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="shopContact">Shop Contact:</label>
-                        <input type="text" class="form-control" id="shopContact" placeholder="Enter shop contact"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="shopImage">Shop Image:</label>
-                        <input type="file" class="form-control-file" id="shopImage" name="shopImage" accept="image/*"
-                            required>
-                    </div>
-                    <div class="form-group center-submit">
-                        <button type="submit" class="btn btn-primary" style="margin-bottom: 30px;">Submit</button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-6 form-container" id="menuForm" style="display: none;">
-                <form class="justify-content-end" id="menuFormElement" onsubmit="submitMenuForm(event)"
-                    enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="foodType">Food Type:</label>
-                        <select class="form-control" id="foodType" name="foodType" style="font-size: 14px;" required>
-                            <option value="veg">Veg</option>
-                            <option value="nonveg">Non-Veg</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="shopName">Shop Name:</label>
-                        <input type="text" class="form-control" id="shopName" name="shopName"
-                            placeholder="Enter name of Shop" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="menuItem">Menu Item:</label>
-                        <input type="text" class="form-control" id="menuItem" name="menuItem"
-                            placeholder="Enter menu item" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="itemPrice">Item Price:</label>
-                        <input type="text" class="form-control" id="itemPrice" name="itemPrice"
-                            placeholder="Enter item price" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="itemCategory">Item Category:</label>
-                        <input type="text" class="form-control" id="itemCategory" name="itemCategory"
-                            placeholder="Enter item Category" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="foodImage">Food Image:</label>
-                        <input type="file" class="form-control-file" id="foodImage" name="foodImage" accept="image/*"
-                            required>
-                    </div>
-                    <div class="form-group center-submit">
-                        <button type="submit" class="btn btn-primary" style="margin-bottom: 30px;">Submit</button>
-                    </div>
-                </form>
-
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
 
     <!-- Footer -->
@@ -378,89 +329,184 @@
     <script src="js/main.js"></script>
 
     <script>
-        function toggleForm(formId) {
-            var forms = document.querySelectorAll('.form-container');
-            forms.forEach(function (form) {
-                if (form.id === formId) {
-                    form.style.display = 'block';
-                } else {
-                    form.style.display = 'none';
-                }
-            });
-        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const shopName = urlParams.get('shop'); // Get shop name from URL
 
-        function submitShopForm(event) {
-            event.preventDefault(); // Prevent the default form submission
+            if (!shopName) {
+                console.error('No shop specified.');
+                return;
+            }
 
-            // Collect form data
-            const shopName = document.getElementById('shopName').value;
-            const shopAddress = document.getElementById('shopAddress').value;
-            const shopOpens = document.getElementById('shopOpens').value;
-            const shopClose = document.getElementById('shopClose').value;
-            const shopContact = document.getElementById('shopContact').value;
-            const shopImage = document.getElementById('shopImage').files[0]; // Assuming single file upload
-
-            // Create FormData object to handle file upload
-            const formData = new FormData();
-            formData.append('shopName', shopName);
-            formData.append('shopAddress', shopAddress);
-            formData.append('shopOpens', shopOpens);
-            formData.append('shopClose', shopClose);
-            formData.append('shopContact', shopContact);
-            formData.append('shopImage', shopImage);
-
-            // Send data to the backend using fetch
-            fetch('http://localhost:3000/api/addRestaurant', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Shop added successfully!');
-                        // Optionally clear the form
-                        document.getElementById('shopFormElement').reset();
-                    } else {
-                        alert('Failed to add shop: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                });
-        }
-
-        function submitMenuForm(event) {
-            event.preventDefault();
-
-            const formData = new FormData(document.getElementById('menuFormElement'));
-
-            fetch('http://localhost:3000/api/addMenuItem', {
-                method: 'POST',
-                body: formData
-            })
-
-                .then(response => {
+            async function fetchShopImage() {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/getRestaurants`); // Modify endpoint if necessary
                     if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                        throw new Error(`HTTP error! Status: ${response.status}`);
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        alert('Menu item added successfully!');
+
+                    const data = await response.json();
+                    const restaurant = data.data.find(r => r.name === shopName);
+
+                    if (restaurant && restaurant.image) {
+                        const shopBackground = document.getElementById('shop-background');
+                        shopBackground.style.backgroundImage = `url('${restaurant.image}')`;
                     } else {
-                        alert('Error adding menu item: ' + data.message);
+                        console.error('Shop image not found.');
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while adding the menu item.');
-                });
+                } catch (error) {
+                    console.error('Error fetching shop image:', error);
+                }
+            }
+
+            fetchShopImage();
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const shopName = urlParams.get('shop'); // Get shop name from URL
+
+            if (!shopName) {
+                document.getElementById('menu-items-container').innerHTML = '<tr><td colspan="7">No shop specified.</td></tr>';
+                return;
+            }
+
+            async function fetchMenu() {
+                const menuContainer = document.getElementById('menu-items-container');
+                menuContainer.innerHTML = '<tr><td colspan="7">Loading menu...</td></tr>';
+
+                try {
+                    const response = await fetch(`http://localhost:3000/api/getMenu/${encodeURIComponent(shopName)}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('Menu data:', data);
+
+                    if (data.success) {
+                        menuContainer.innerHTML = ''; // Clear the loading message
+
+                        data.data.forEach((item, index) => {
+                            const menuItemRow = document.createElement('tr');
+                            menuItemRow.classList.add('text-center');
+
+                            menuItemRow.innerHTML = `
+        <td></td>
+         <td class="image-prod">
+          <div class="img" style="background-image: url('${item.food_image}'); border-radius:50%"></div>
+        </td>
+        <td class="product-name">
+            <h3>${item.menu_item}</h3>
+        </td>
+        <td class="price">
+            <span id="price-value">${item.item_price.toFixed(2)}</span>
+        </td>
+        <td class="quantity">
+            <button class="decrement" onclick="changeQuantity('${index}', -1)">-</button>
+            <span id="quantity-value-${index}">0</span>
+            <button class="increment" onclick="changeQuantity('${index}', 1)">+</button>
+        </td>
+        <td class="total">
+            <button class="btn btn-primary py-2 px-3" onclick="addToCart(${index}, '${item.menu_item}', ${item.item_price}, '${item.food_image}', '${item.restaurant_id}', '${item.restaurant_name}')">Add to cart</button>
+        </td>
+    `;
+
+                            menuContainer.appendChild(menuItemRow);
+                        });
+                    } else {
+                        menuContainer.innerHTML = '<tr><td colspan="7">Failed to load menu data.</td></tr>';
+                    }
+                } catch (error) {
+                    console.error('Error fetching menu data:', error);
+                    menuContainer.innerHTML = '<tr><td colspan="7">Error loading menu data. Please try again later.</td></tr>';
+                }
+            }
+
+            fetchMenu();
+        });
+
+        // Function to handle quantity changes (for illustration)
+        function changeQuantity(index, change) {
+            const quantitySpan = document.querySelector(`#quantity-value-${index}`);
+            let quantity = parseInt(quantitySpan.textContent) || 0;
+            quantity += change;
+
+            if (quantity < 0) quantity = 0;
+            quantitySpan.textContent = quantity;
         }
+
+
+        // Function to get query parameter by name
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Extract restaurant name from URL
+        const restaurantName = getQueryParam('shop');
+
+
+
+        async function addToCart(index, itemName, itemPrice, itemImage) {
+            const quantitySpan = document.querySelector(`#quantity-value-${index}`);
+            const quantity = parseInt(quantitySpan.textContent) || 0;
+            const restaurantName = getQueryParam('shop');
+
+
+            if (quantity > 0) {
+                const totalPrice = itemPrice * quantity; // Calculate total price
+
+                console.log({
+                    restaurant_name: restaurantName,
+                    menu_item: itemName,
+                    quantity: quantity,
+                    price: itemPrice,
+                    total_price: totalPrice,
+                    food_image: itemImage
+                }); // Debugging log
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/addToCart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            // restaurant_id: restaurantId,
+                            restaurant_name: restaurantName,
+                            menu_item: itemName,
+                            quantity: quantity,
+                            price: itemPrice,
+                            total_price: totalPrice,
+                            food_image: itemImage
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    if (data.success) {
+                        alert('Item added to cart successfully!');
+                    } else {
+                        alert('Failed to add item to cart.');
+                    }
+                } catch (error) {
+                    console.error('Error adding item to cart:', error);
+                    alert('Error adding item to cart. Please try again later.');
+                }
+            } else {
+                alert('Please select a quantity greater than 0.');
+            }
+        }
+
 
 
     </script>
+
 </body>
 
 </html>

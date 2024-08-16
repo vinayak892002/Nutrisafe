@@ -105,6 +105,12 @@
 			list-style-type: none;
 			padding: 0;
 		}
+
+		.custom {
+			width: 100px;
+			margin-top: 20px;
+			border: none;
+		}
 	</style>
 </head>
 
@@ -131,16 +137,23 @@
 				<li class="nav-item"><a href="profile.html" class="nav-link">Profile</a></li>
 				<li class="nav-item cta cta-colored"><a href="wishlist.html" class="nav-link"><span
 							class="icon-shopping_cart"></span>[0]</a></li>
+				<li class="nav-item"><a href="orders.html" class="nav-link">Orders</a></li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
 						aria-expanded="false">
 						User
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="login.html" style="color: red; font-size: 12px;">LogOut</a></li>
+						<li><a class="dropdown-item" href="login.html" style="color: red; font-size: 12px;">LogOut</a>
+						</li>
 						<li><a class="dropdown-item" href="update.html" style="font-size: 12px;">Update Info</a></li>
 						<li><a class="dropdown-item" href="add.html" style="font-size: 12px;">ADD</a></li>
 					</ul>
+				<li><input class="custom " type="search" placeholder="Search" aria-label="Search" style="width: 20px;">
+					<button class="btn btn-outline-light" type="submit" style="color: black">Search</button>
+				</li>
+
+
 				</li>
 			</ul>
 		</div>
@@ -210,56 +223,6 @@
 			</div>
 		</div>
 	</section>
-
-	<!-- <section class="ftco-section ftco-category ftco-no-pt">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8">
-						<div class="row">
-							<div class="col-md-6 order-md-last align-items-stretch d-flex">
-								<div class="category-wrap-2 ftco-animate img align-self-stretch d-flex"
-									style="background-image: url(images/category.jpg);">
-									<div class="text text-center">
-										<h2>Vegetables</h2>
-										<p>Protect the health of every home</p>
-										<p><a href="#" class="btn btn-primary">Shop now</a></p>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
-									style="background-image: url(images/category-1.jpg);">
-									<div class="text px-3 py-1">
-										<h2 class="mb-0"><a href="#">Fruits</a></h2>
-									</div>
-								</div>
-								<div class="category-wrap ftco-animate img d-flex align-items-end"
-									style="background-image: url(images/category-2.jpg);">
-									<div class="text px-3 py-1">
-										<h2 class="mb-0"><a href="#">Vegetables</a></h2>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
-							style="background-image: url(images/category-3.jpg);">
-							<div class="text px-3 py-1">
-								<h2 class="mb-0"><a href="#">Juices</a></h2>
-							</div>
-						</div>
-						<div class="category-wrap ftco-animate img d-flex align-items-end"
-							style="background-image: url(images/category-4.jpg);">
-							<div class="text px-3 py-1">
-								<h2 class="mb-0"><a href="#">Dried</a></h2>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section> -->
 	<section>
 		<div class="container" style="text-align: center;">
 			<div id="ingredient-container"></div>
@@ -293,12 +256,12 @@
 				</div>
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="strawberry.html" class="img-prod"><img class="img-fluid" src="images/burger.avif"
+						<a href="blog.html" class="img-prod"><img class="img-fluid" src="images/burger.avif"
 								alt="Colorlib Template">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
-							<h3><a href="strawberry.html">Burger</a></h3>
+							<h3><a href="blog.html">Burger</a></h3>
 
 						</div>
 					</div>
@@ -391,12 +354,7 @@
 					<h3>Join the community that cares about what's on your plate.</h3>
 					<button class="btn btn-success rounded-pill" onclick="window.location.href='recipe.html'">Explore
 						Recipes</button>
-					<!-- <div id="timer" class="d-flex mt-5">
-							<div class="time" id="days"></div>
-							<div class="time pl-3" id="hours"></div>
-							<div class="time pl-3" id="minutes"></div>
-							<div class="time pl-3" id="seconds"></div>
-						</div> -->
+					
 				</div>
 			</div>
 		</div>
@@ -500,55 +458,28 @@
 			</div>
 		</div>
 	</section>
-
-	<hr>
-
-	<!-- <section class="ftco-section ftco-partner">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm ftco-animate">
-						<a href="#" class="partner"><img src="images/partner-1.png" class="img-fluid"
-								alt="Colorlib Template"></a>
-					</div>
-					<div class="col-sm ftco-animate">
-						<a href="#" class="partner"><img src="images/partner-2.png" class="img-fluid"
-								alt="Colorlib Template"></a>
-					</div>
-					<div class="col-sm ftco-animate">
-						<a href="#" class="partner"><img src="images/partner-3.png" class="img-fluid"
-								alt="Colorlib Template"></a>
-					</div>
-					<div class="col-sm ftco-animate">
-						<a href="#" class="partner"><img src="images/partner-4.png" class="img-fluid"
-								alt="Colorlib Template"></a>
-					</div>
-					<div class="col-sm ftco-animate">
-						<a href="#" class="partner"><img src="images/partner-5.png" class="img-fluid"
-								alt="Colorlib Template"></a>
-					</div>
+	<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+		<div class="container py-4">
+			<div class="row d-flex justify-content-center py-5">
+				<div class="col-md-6">
+					<h2 style="font-size: 22px;" class="mb-0">Subscribe to our Newsletter</h2>
+					<span>Get e-mail updates about our latest shops and special offers</span>
+				</div>
+				<div class="col-md-6 d-flex align-items-center">
+					<form id="subscribe-form" class="subscribe-form">
+						<div class="form-group d-flex" style="  border-radius: 25px;  background-color: light-dark(rgb(232, 240, 254), rgba(70, 90, 126, 0.4)) ">
+							<input type="text" id="email" class="form-control" placeholder="Enter email address">
+							<input type="submit" value="Subscribe" class="submit px-3" style="  border-radius: 25px;">
+						</div>
+						<small id="email-error" style="color: red;"></small>
+					</form>
 				</div>
 			</div>
-		</section> -->
+		</div>
+	</section>
 
-	<!-- <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
-			<div class="container py-4">
-				<div class="row d-flex justify-content-center py-5">
-					<div class="col-md-6">
-						<h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
-						<span>Get e-mail updates about our latest shops and special offers</span>
-					</div>
-					<div class="col-md-6 d-flex align-items-center">
-						<form action="#" class="subscribe-form">
-							<div class="form-group d-flex">
-								<input type="text" class="form-control"
-									placeholder="Enter email address">
-								<input type="submit" value="Subscribe" class="submit px-3">
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</section> -->
+
+
 	<footer class="ftco-footer ftco-section">
 		<div class="container">
 			<div class="row">
@@ -669,24 +600,42 @@
 	<script src="js/main.js"></script>
 
 	<script>
-		function displayIngredients(ingredients) {
-			const ingredientContainer = document.getElementById('ingredient-container');
-			ingredientContainer.innerHTML = `
-					<h2>Ingredients</h2>
-					<ul>
-						${ingredients.map(ingredient => `
-							<li class="${ingredient.isSafe ? 'safe' : 'not-safe'}">${ingredient.name}</li>
-						`).join('')}
-					</ul>
-					<p style="font-size: 1.5rem;">${ingredients.every(ingredient => ingredient.isSafe) ? 'Safe' : 'Not Safe'}</p>
-				`;
-		}
+			document.getElementById('subscribe-form').addEventListener('submit', function (e) {
+			e.preventDefault();
 
-		// Example data for ingredients
+			const email = document.getElementById('email').value;
+			const emailError = document.getElementById('email-error');
+
+			// Email validation regex
+			const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+			if (!emailPattern.test(email)) {
+				emailError.textContent = 'Please enter a valid email address.';
+			} else {
+				emailError.textContent = '';
+
+				// Send email to the server for processing
+				fetch('http://localhost:3000/api/sendConfirmationEmail', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ email: email })
+				})
+					.then(response => response.json())
+					.then(data => {
+						if (data.success) {
+							alert('A confirmation email has been sent to your address!');
+						} else {
+							alert('Error: ' + data.message);
+						}
+					})
+					.catch(error => console.error('Error:', error));
+			}
+		});
 
 
-		// Call the function with your data when available
-		displayIngredients(exampleIngredients);
+	
 	</script>
 
 </body>
