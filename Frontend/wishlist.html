@@ -597,56 +597,56 @@
 		});
 		// discount
 		document.getElementById('apply-coupon').addEventListener('click', function () {
-    const couponCode = document.getElementById('coupon-code').value.trim();
+			const couponCode = document.getElementById('coupon-code').value.trim();
 
-    if (couponCode === "") {
-        alert("Please enter a coupon code.");
-        return;
-    }
+			if (couponCode === "") {
+				alert("Please enter a coupon code.");
+				return;
+			}
 
-    // Fetch the current username
-    fetch('http://localhost:3000/api/getUsername')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const username = data.username;
+			// Fetch the current username
+			fetch('http://localhost:3000/api/getUsername')
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						const username = data.username;
 
-                // Get the current grand total from the displayed value
-                const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace('$', ''));
+						// Get the current grand total from the displayed value
+						const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace('$', ''));
 
-                // Apply the coupon using the fetched username and current grand total
-                fetch('http://localhost:3000/api/applyCoupon', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        couponCode: couponCode,
-                        username: username,
-                        grandTotal: grandTotal // Send the current grand total to the server
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Update the grand total with the new value returned from the server
-                        document.getElementById('grand-total').textContent = `$${data.newTotal}`;
-                        alert('Coupon applied successfully!');
-                    } else {
-                        alert(data.message); // Display the error message from the backend
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            } else {
-                alert('Failed to fetch username: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-});
+						// Apply the coupon using the fetched username and current grand total
+						fetch('http://localhost:3000/api/applyCoupon', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({
+								couponCode: couponCode,
+								username: username,
+								grandTotal: grandTotal // Send the current grand total to the server
+							})
+						})
+							.then(response => response.json())
+							.then(data => {
+								if (data.success) {
+									// Update the grand total with the new value returned from the server
+									document.getElementById('grand-total').textContent = `$${data.newTotal}`;
+									alert('Coupon applied successfully!');
+								} else {
+									alert(data.message); // Display the error message from the backend
+								}
+							})
+							.catch(error => {
+								console.error('Error:', error);
+							});
+					} else {
+						alert('Failed to fetch username: ' + data.message);
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+		});
 
 
 	</script>
