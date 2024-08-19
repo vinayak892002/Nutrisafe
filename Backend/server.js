@@ -22,7 +22,7 @@ const upload = multer({ storage: storage });
 const dbConfig = {
   host: 'localhost',
   user: 'root',
-  password: '12345',
+  password: 'root',
   database: 'nutrisafe_db'
 };
 
@@ -806,7 +806,9 @@ app.post('/api/applyCoupon', async (req, res) => {
     if (typeof grandTotal !== 'number') {
       return res.status(400).json({ success: false, message: 'Grand total must be a number.' });
     }
-
+    if (grandTotal <= 399) {
+      return res.status(400).json({ success: false, message: 'Grand total must be above 399 to apply this coupon.' });
+    }
    
     db.query('SELECT username FROM user_details LIMIT 1', async (err, userResults) => {
       if (err) {
@@ -841,7 +843,7 @@ app.post('/api/applyCoupon', async (req, res) => {
           const discountedTotal = grandTotal - 100;
           const finalTotal = discountedTotal < 0 ? 0 : discountedTotal;
 
-          res.json({ success: true, message: 'Coupon applied successfully.', newTotal: finalTotal });
+          res.json({ success: true, message: 'Coupon applied successfully.', newTotal: finalTotal, discountAmount: discountAmount  });
         } else {
           res.status(400).json({ success: false, message: 'Invalid coupon code.' });
         }
