@@ -823,7 +823,9 @@ app.post('/api/sendConfirmationEmail', (req, res) => {
     from: 'cvinayak542@gmail.com',
     to: email,
     subject: 'Subscription Confirmation',
-    text: 'Thank you for subscribing to our newsletter! use CODE: NEWBEE! to awail discount upto ₹100 Discount on your first order above 399... Hurry Up.'
+    text: `Thank you for subscribing to our newsletter! Use CODE: NEWBEE! to avail up to ₹100 discount on your first order above ₹399. Hurry Up!
+
+    As a valued subscriber, you also receive a special coupon code for 20% off on orders above ₹500. Use CODE: SPECIAL20 to get this discount, valid only once per user. Don't miss out on this exclusive offer and stay tuned for more exciting updates and promotions!`
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -842,9 +844,7 @@ app.post('/api/applyCoupon', async (req, res) => {
     if (typeof grandTotal !== 'number') {
       return res.status(400).json({ success: false, message: 'Grand total must be a number.' });
     }
-    if (grandTotal <= 399) {
-      return res.status(400).json({ success: false, message: 'Grand total must be above 399 to apply this coupon.' });
-    }
+
 
     db.query('SELECT username FROM user_details LIMIT 1', async (err, userResults) => {
       if (err) {
@@ -871,16 +871,25 @@ app.post('/api/applyCoupon', async (req, res) => {
 
         const orderCount = orderResults[0].orderCount;
 
-        if (orderCount > 0) {
+        if (orderCount > 0 && couponCode === 'NEWBEE!') {
           return res.status(400).json({ success: false, message: 'You are not eligible for this coupon.' });
         }
 
         if (couponCode === 'NEWBEE!') {
-          const discountedTotal = grandTotal - 100;
+          discountAmount=100;
+          const discountedTotal = grandTotal - discountAmount;
           const finalTotal = discountedTotal < 0 ? 0 : discountedTotal;
 
-          res.json({ success: true, message: 'Coupon applied successfully.', newTotal: finalTotal, discountAmount: discountAmount });
-        } else {
+          res.json({ success: true, message: 'Coupon applied successfully.', newTotal: finalTotal,discountAmount });
+        } else if (couponCode === 'SPECIAL20') {
+          if (grandTotal >= 500) {
+            const discountAmount = Math.min(grandTotal * 0.20, 100); // Calculate 20% or ₹100, whichever is lowe
+            const discountedTotal = grandTotal -  Math.min(grandTotal * 0.20, 100);
+            const finalTotal = discountedTotal < 0 ? 0 : discountedTotal;
+            res.json({ success: true, message: 'Coupon applied successfully.', newTotal: finalTotal, discountAmount});
+          }
+        }
+        else {
           res.status(400).json({ success: false, message: 'Invalid coupon code.' });
         }
       });
@@ -890,6 +899,7 @@ app.post('/api/applyCoupon', async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
+
 
 // profile
 app.get('/api/getUserProfile', (req, res) => {
