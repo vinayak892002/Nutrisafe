@@ -72,27 +72,26 @@
 <body class="goto-here">
 	<div class="py-1 bg-primary">
 		<div class="container">
-			<div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
-				<div class="col-lg-12 d-block">
-					<div class="row d-flex">
-						<div class="col-md pr-4 d-flex topper align-items-center">
-							<div class="icon mr-2 d-flex justify-content-center align-items-center"><span
-									class="icon-phone2"></span></div>
-							<span class="text">+ 1235 2355 98</span>
-						</div>
-						<div class="col-md pr-4 d-flex topper align-items-center">
-							<div class="icon mr-2 d-flex justify-content-center align-items-center"><span
-									class="icon-paper-plane"></span></div>
-							<span class="text">youremail@email.com</span>
-						</div>
-						<div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
-							<span class="text">15-20 mins delivery &amp; Free Returns</span>
-						</div>
+			<div class="row no-gutters d-flex align-items-center px-md-0 justify-content-between" >
+				<div class="col-md d-flex topper justify-content-center align-items-center">
+					<div class="icon mr-2 d-flex justify-content-center align-items-center">
+						<span class="icon-phone2"></span>
 					</div>
+					<span class="text">+ 1235 2355 98</span>
+				</div>
+				<div class="col-md d-flex topper justify-content-center align-items-center">
+					<div class="icon mr-2 d-flex justify-content-center align-items-center">
+						<span class="icon-paper-plane"></span>
+					</div>
+					<span class="text">nutrisafe@gmail.com</span>
+				</div>
+				<div class="col-md-5 topper d-flex justify-content-center align-items-center">
+					<span class="text text-lg-right">15-20 mins delivery &amp; Free Returns</span>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		style="padding: 0 20px 0 20px;" id="ftco-navbar">
@@ -202,7 +201,7 @@
 									<span id="discount-total">0</span>
 								</td>
 
-								
+
 								<td></td>
 							</tr>
 						</table>
@@ -341,13 +340,13 @@
 	<script>
 		$(document).ready(function () {
 			var quantityInput = $('#quantity');
-	
+
 			$('.quantity-right-plus').click(function (e) {
 				e.preventDefault();
 				var quantity = parseInt(quantityInput.val(), 10);
 				quantityInput.val(quantity + 1);
 			});
-	
+
 			$('.quantity-left-minus').click(function (e) {
 				e.preventDefault();
 				var quantity = parseInt(quantityInput.val(), 10);
@@ -356,7 +355,7 @@
 				}
 			});
 		});
-	
+
 		async function fetchUsername() {
 			try {
 				const response = await fetch('http://localhost:3000/api/getUsername');
@@ -364,7 +363,7 @@
 					throw new Error(`Network response was not ok: ${response.statusText}`);
 				}
 				const data = await response.json();
-	
+
 				if (data.success && data.username) {
 					return data.username;
 				} else {
@@ -376,17 +375,17 @@
 				return null;
 			}
 		}
-	
+
 		document.addEventListener('DOMContentLoaded', async function () {
 			const username = await fetchUsername();
 			if (!username) {
 				console.error('Username could not be fetched.');
 				return;
 			}
-	
+
 			const cartItemsContainer = document.getElementById('cart-items');
 			const grandTotalElement = document.getElementById('grand-total');
-	
+
 			try {
 				const response = await fetch(`http://localhost:3000/api/getCartItems/${username}`);
 				if (!response.ok) {
@@ -394,18 +393,18 @@
 				}
 				const data = await response.json();
 				console.log('Cart items data:', data);
-	
+
 				if (data.success) {
 					let grandTotal = 0;
-	
+
 					data.data.forEach(item => {
 						const itemTotal = item.quantity * item.price;
 						grandTotal += itemTotal;
-	
+
 						const tr = document.createElement('tr');
 						tr.classList.add('text-center');
 						tr.setAttribute('data-id', item.cart_item_id);
-	
+
 						tr.innerHTML = `
 							<td class="product-remove">
 								<a href="#" class="remove-item" data-menu-item="${item.menu_item}">
@@ -426,24 +425,24 @@
 							</td>
 							<td class="total">₹${itemTotal.toFixed(2)}</td>
 						`;
-	
+
 						cartItemsContainer.appendChild(tr);
 					});
-	
-					grandTotalElement.textContent = `₹${grandTotal.toFixed(2)}`;
-	
+
+					grandTotalElement.textContent = `${grandTotal.toFixed(2)}`;
+
 					document.querySelectorAll('.remove-item').forEach(button => {
 						button.addEventListener('click', function (e) {
 							e.preventDefault();
 							const tr = this.closest('tr');
 							const itemId = tr.getAttribute('data-id');
 							const menuItem = this.getAttribute('data-menu-item');
-	
+
 							if (!itemId || !menuItem) {
 								console.error('Item ID or menuItem is missing.');
 								return;
 							}
-	
+
 							fetch(`http://localhost:3000/api/removeCartItem/${username}/${encodeURIComponent(menuItem)}`, {
 								method: 'DELETE'
 							})
@@ -467,20 +466,20 @@
 				console.error('Error:', error);
 			}
 			const orderButton = document.querySelector('.btn-primary');
-	
+
 			// Add click event listener to the "Order" button
 			if (orderButton) {
-	
+
 				fetch('http://localhost:3000/api/getUsername')
 					.then(response => response.json())
 					.then(data => {
 						if (data.success) {
 							const username = data.username;
-	
+
 							// Add click event listener for the order button
 							orderButton.addEventListener('click', function (e) {
 								e.preventDefault();
-	
+
 								const cartItems = [];
 								document.querySelectorAll('#cart-items tr').forEach(row => {
 									const itemId = row.getAttribute('data-id');
@@ -488,7 +487,7 @@
 									const itemQuantity = parseInt(row.querySelector('.quantity input').value, 10);
 									const itemPrice = parseFloat(row.querySelector('.price').textContent.replace('₹', ''));
 									const itemTotal = itemQuantity * itemPrice;
-	
+
 									cartItems.push({
 										id: itemId,
 										name: itemName,
@@ -497,21 +496,21 @@
 										total: itemTotal
 									});
 								});
-	
+
 								const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace('₹', ''));
-	
+
 								// Calculate tokens to add
 								const tokensToAdd = Math.floor(grandTotal / 100) * 5;
-	
+
 								const orderData = {
 									username: username,
 									items: cartItems,
 									grandTotal: grandTotal,
 									tokensToAdd: tokensToAdd
 								};
-	
+
 								console.log('Order Data:', orderData);
-	
+
 								fetch('http://localhost:3000/api/placeOrder', {
 									method: 'POST',
 									headers: {
@@ -537,10 +536,10 @@
 					})
 					.catch(error => console.error('Error fetching username:', error));
 			}
-	
+
 			document.getElementById('l').addEventListener('click', function (event) {
 				event.preventDefault(); // Prevent the default link behavior
-	
+
 				// Make a POST request to the logout endpoint
 				fetch('http://localhost:3000/api/out', { // Adjust URL if necessary
 					method: 'POST',
@@ -568,21 +567,21 @@
 						alert('Logout failed due to an error');
 					});
 			});
-	
+
 			document.getElementById('subscribe-form').addEventListener('submit', function (e) {
 				e.preventDefault();
-	
+
 				const email = document.getElementById('email').value;
 				const emailError = document.getElementById('email-error');
-	
+
 				// Email validation regex
 				const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	
+
 				if (!emailPattern.test(email)) {
 					emailError.textContent = 'Please enter a valid email address.';
 				} else {
 					emailError.textContent = '';
-	
+
 					// Send email to the server for processing
 					fetch('http://localhost:3000/api/sendConfirmationEmail', {
 						method: 'POST',
@@ -602,56 +601,63 @@
 						.catch(error => console.error('Error:', error));
 				}
 			});
-	
+
 			// discount
 			document.getElementById('apply-coupon').addEventListener('click', function () {
 				const couponCode = document.getElementById('coupon-code').value.trim();
-	
+
 				if (couponCode === "") {
 					alert("Please enter a coupon code.");
 					return;
 				}
-	
+
 				// Fetch the current username
 				fetch('http://localhost:3000/api/getUsername')
 					.then(response => response.json())
 					.then(data => {
 						if (data.success) {
 							const username = data.username;
-	
-							// Make a request to check the user's orders
-							fetch(`http://localhost:3000/api/checkOrders/${username}`)
+
+							// Get the current grand total from the displayed value
+							// Ensure that '₹' is used if that's your currency symbol
+							const grandTotalText = document.getElementById('grand-total').textContent;
+							const grandTotal = parseFloat(grandTotalText.replace('₹', '').replace(',', ''));
+
+							// Apply the coupon using the fetched username and current grand total
+							fetch('http://localhost:3000/api/applyCoupon', {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify({
+									couponCode: couponCode,
+									username: username,
+									grandTotal: grandTotal // Send the current grand total to the server
+								})
+							})
 								.then(response => response.json())
-								.then(orderData => {
-									if (orderData.success) {
-										const hasOrders = orderData.hasOrders;
-	
-										// Validate the coupon code
-										if (!hasOrders && couponCode === "NEWBEE!") {
-											const grandTotal = parseFloat(document.getElementById('grand-total').textContent.replace('₹', ''));
-											const discount = 100;
-											const newTotal = grandTotal - discount;
-	
-											document.getElementById('grand-total').textContent = `₹${newTotal.toFixed(2)}`;
-											document.getElementById('discount-total').textContent = `$${data.discountAmount.toFixed(2)}`;
-											alert(`Coupon applied! You have received ₹${discount} off.`);
-										} else {
-											alert("Invalid coupon code or conditions not met.");
-										}
+								.then(data => {
+									if (data.success) {
+										// Update the grand total and discount amount with the new values returned from the server
+										document.getElementById('grand-total').textContent = `₹${data.newTotal.toFixed(2)}`;
+										document.getElementById('discount-total').textContent = `₹${data.discountAmount.toFixed(2)}`;
+										alert('Coupon applied successfully!');
 									} else {
-										alert('Error checking orders: ' + orderData.message);
+										alert(data.message); // Display the error message from the backend
 									}
 								})
-								.catch(error => console.error('Error:', error));
+								.catch(error => {
+									console.error('Error:', error);
+								});
 						} else {
-							alert('Error fetching username: ' + data.message);
+							alert('Failed to fetch username: ' + data.message);
 						}
 					})
 					.catch(error => console.error('Error:', error));
 			});
 		});
 	</script>
-	
+
 
 </body>
 
