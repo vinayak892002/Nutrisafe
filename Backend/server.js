@@ -823,7 +823,7 @@ app.post('/api/sendConfirmationEmail', (req, res) => {
     from: 'cvinayak542@gmail.com',
     to: email,
     subject: 'Subscription Confirmation',
-    text: 'Thank you for subscribing to our newsletter! use CODE: NEWBEE! tO awail discount upto ₹100 Discount on your first order... Hurry Up.'
+    text: 'Thank you for subscribing to our newsletter! use CODE: NEWBEE! to awail discount upto ₹100 Discount on your first order above 399... Hurry Up.'
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
