@@ -110,6 +110,13 @@
 			width: 100px;
 			margin-top: 20px;
 			border: none;
+			text-align: center;
+		}
+
+		.custom:focus {
+
+			outline: none;
+
 		}
 	</style>
 </head>
@@ -149,8 +156,8 @@
 						<li><a class="dropdown-item" href="update.html" style="font-size: 12px;">Update Info</a></li>
 						<li><a class="dropdown-item" href="add.html" style="font-size: 12px;">ADD</a></li>
 					</ul>
-				<li><input class="custom " type="search" placeholder="Search" aria-label="Search" style="width: 20px;">
-					<button class="btn btn-outline-light" type="submit" style="color: black">Search</button>
+				<li>
+					<input id="searchInput" class="custom" type="search" placeholder="Search" aria-label="Search">
 				</li>
 
 
@@ -244,48 +251,47 @@
 			<div class="row">
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="product-single.html" class="img-prod"><img class="img-fluid" src="images/biryani.avif"
-								alt="Colorlib Template" style="border-radius: 50%;">
+						<a href="restaurant.html?product=Biryani" class="img-prod" data-product="Biryani">
+							<img class="img-fluid" src="images/biryani.avif" alt="Biryani" style="border-radius: 50%;">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
-							<h3><a href="product-single.html">Biryani</a></h3>
+							<h3><a href="restaurant.html" data-product="Biryani">Biryani</a></h3>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3 ftco-animate">
+					<div class="product">
+						<a href="restaurant.html?product=Burger" class="img-prod"><img class="img-fluid"
+								src="images/burger.avif" alt="Colorlib Template">
+							<div class="overlay"></div>
+						</a>
+						<div class="text py-3 pb-4 px-3 text-center">
+							<h3><a href="restaurant.html">Burger</a></h3>
 
 						</div>
 					</div>
 				</div>
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="blog.html" class="img-prod"><img class="img-fluid" src="images/burger.avif"
-								alt="Colorlib Template">
+						<a href="restaurant.html?product=Pizza" class="img-prod"><img class="img-fluid"
+								src="images/pizza.avif" alt="Colorlib Template">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
-							<h3><a href="blog.html">Burger</a></h3>
+							<h3><a href="restaurant.html">Pizza</a></h3>
 
 						</div>
 					</div>
 				</div>
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="greenbeans.html" class="img-prod"><img class="img-fluid" src="images/pizza.avif"
-								alt="Colorlib Template">
+						<a href="restaurant.html?product=Marashtrian Thali" class="img-prod"><img class="img-fluid"
+								src="images/thali.avif" alt="Colorlib Template">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
-							<h3><a href="greenbeans.html">Pizza</a></h3>
-
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-3 ftco-animate">
-					<div class="product">
-						<a href="cabbage.html" class="img-prod"><img class="img-fluid" src="images/thali.avif"
-								alt="Colorlib Template">
-							<div class="overlay"></div>
-						</a>
-						<div class="text py-3 pb-4 px-3 text-center">
-							<h3><a href="cabbage.html">Mharashtrian Thali</a></h3>
+							<h3><a href="restaurant.html">Marashtrian Thali</a></h3>
 
 						</div>
 					</div>
@@ -293,48 +299,48 @@
 
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="#" class="img-prod"><img class="img-fluid" src="images/south.avif"
-								alt="Colorlib Template">
+						<a href="restaurant.html?product=South Indian" class="img-prod"><img class="img-fluid"
+								src="images/south.avif" alt="Colorlib Template">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
-							<h3><a href="#">South Indian</a></h3>
+							<h3><a href="restaurant.html">South Indian</a></h3>
 
 						</div>
 					</div>
 				</div>
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="#" class="img-prod"><img class="img-fluid" src="images/northindia.avif"
-								alt="Colorlib Template">
+						<a href="restaurant.html?product=North Indian" class="img-prod"><img class="img-fluid"
+								src="images/northindia.avif" alt="Colorlib Template">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
-							<h3><a href="#">North Indian</a></h3>
+							<h3><a href="restaurant.html">North Indian</a></h3>
 
 						</div>
 					</div>
 				</div>
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="#" class="img-prod"><img class="img-fluid" src="images/chicken.avif"
-								alt="Colorlib Template">
+						<a href="restaurant.html?product=Chicken" class="img-prod"><img class="img-fluid"
+								src="images/chicken.avif" alt="Colorlib Template">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
-							<h3><a href="#">Chicken</a></h3>
+							<h3><a href="restaurant.html">Chicken</a></h3>
 
 						</div>
 					</div>
 				</div>
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="#" class="img-prod"><img class="img-fluid" src="images/rolls.avif"
-								alt="Colorlib Template">
+						<a href="restaurant.html?product=Roll" class="img-prod"><img class="img-fluid"
+								src="images/rolls.avif" alt="Colorlib Template">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
-							<h3><a href="#">Rolls</a></h3>
+							<h3><a href="restaurant.html">Rolls</a></h3>
 
 						</div>
 					</div>
@@ -354,7 +360,7 @@
 					<h3>Join the community that cares about what's on your plate.</h3>
 					<button class="btn btn-success rounded-pill" onclick="window.location.href='recipe.html'">Explore
 						Recipes</button>
-					
+
 				</div>
 			</div>
 		</div>
@@ -467,7 +473,8 @@
 				</div>
 				<div class="col-md-6 d-flex align-items-center">
 					<form id="subscribe-form" class="subscribe-form">
-						<div class="form-group d-flex" style="  border-radius: 25px;  background-color: light-dark(rgb(232, 240, 254), rgba(70, 90, 126, 0.4)) ">
+						<div class="form-group d-flex"
+							style="  border-radius: 25px;  background-color: light-dark(rgb(232, 240, 254), rgba(70, 90, 126, 0.4)) ">
 							<input type="text" id="email" class="form-control" placeholder="Enter email address">
 							<input type="submit" value="Subscribe" class="submit px-3" style="  border-radius: 25px;">
 						</div>
@@ -600,7 +607,7 @@
 	<script src="js/main.js"></script>
 
 	<script>
-			document.getElementById('subscribe-form').addEventListener('submit', function (e) {
+		document.getElementById('subscribe-form').addEventListener('submit', function (e) {
 			e.preventDefault();
 
 			const email = document.getElementById('email').value;
@@ -614,7 +621,7 @@
 			} else {
 				emailError.textContent = '';
 
-				// Send email to the server for processing
+
 				fetch('http://localhost:3000/api/sendConfirmationEmail', {
 					method: 'POST',
 					headers: {
@@ -635,7 +642,35 @@
 		});
 
 
-	
+		document.getElementById('searchInput').addEventListener('keydown', function (event) {
+			if (event.key === 'Enter') {
+				event.preventDefault();
+
+				const product = this.value;
+
+
+				window.location.href = 'restaurant.html?product=' + encodeURIComponent(product);
+
+
+				fetch('/api/getRestaurantsByProduct?product=' + encodeURIComponent(product))
+					.then(response => response.json())
+					.then(data => {
+						if (data.success) {
+							console.log('Restaurants:', data.data);
+
+						} else {
+							console.error('Error:', data.message);
+
+						}
+					})
+					.catch(error => {
+						console.error('Network error:', error);
+
+					});
+			}
+		});
+
+
 	</script>
 
 </body>

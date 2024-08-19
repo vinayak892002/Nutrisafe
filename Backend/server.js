@@ -11,11 +11,11 @@ const app = express();
 
 
 app.use(cors());
-app.use(bodyParser.json({ limit: '10mb' })); 
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: true })); 
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 // Configure multer for file uploads
-const storage = multer.memoryStorage(); 
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // Database connection configuration
@@ -93,7 +93,7 @@ app.post('/api/login', (req, res) => {
 
     const user = results[0];
 
-  
+
     if (password === user.password) {
       // Insert into user_details table
       const insertDetailsSql = 'INSERT INTO user_details (username, password, user_id) VALUES (?, ?, ?)';
@@ -151,7 +151,43 @@ app.get('/api/getUsername', (req, res) => {
   });
 });
 
+// recomendation
 
+app.get('/api/restaurants', (req, res) => {
+  const item = req.query.item;
+
+  if (!item) {
+    return res.status(400).json({ error: 'Item query parameter is required' });
+  }
+
+  // Fetch restaurant names from the main table
+  connection.query('SELECT name FROM restaurant', (err, restaurants) => {
+    if (err) return res.status(500).json({ error: err.message });
+
+    const promises = restaurants.map(restaurant => {
+      return new Promise((resolve, reject) => {
+        // Query each restaurant's menu table
+        connection.query(`SELECT * FROM \`${restaurant.name}\` WHERE item_name = ?`, [item], (err, menu) => {
+          if (err) return reject(err);
+
+          if (menu.length > 0) {
+            resolve({ restaurant: restaurant.name, menu });
+          } else {
+            resolve(null);
+          }
+        });
+      });
+    });
+
+    Promise.all(promises).then(results => {
+      // Filter out null results and send response
+      const filteredResults = results.filter(result => result !== null);
+      res.json(filteredResults);
+    }).catch(err => {
+      res.status(500).json({ error: err.message });
+    });
+  });
+});
 
 // Handle file uploads
 app.post('/api/addRestaurant', upload.single('shopImage'), (req, res) => {
@@ -291,7 +327,7 @@ app.post('/api/addMenuItem', upload.single('foodImage'), (req, res) => {
 
 // gget menu
 app.get('/api/getMenu/:shopName', (req, res) => {
-  const shopName = req.params.shopName.replace(/[^a-zA-Z0-9_]/g, '_'); 
+  const shopName = req.params.shopName.replace(/[^a-zA-Z0-9_]/g, '_');
 
 
   const sql = `SELECT menu_item, item_price, food_image FROM ${shopName}`;
@@ -302,7 +338,7 @@ app.get('/api/getMenu/:shopName', (req, res) => {
       return res.status(500).json({ success: false, message: 'Database error' });
     }
 
-  
+
     const modifiedResults = results.map(item => {
       if (item.food_image) {
         item.food_image = `data:image/jpeg;base64,${Buffer.from(item.food_image).toString('base64')}`;
@@ -334,7 +370,7 @@ app.post('/api/addToCart', (req, res) => {
   }
 
 
-  const userQuery = 'SELECT user_id, username FROM user_details LIMIT 1'; 
+  const userQuery = 'SELECT user_id, username FROM user_details LIMIT 1';
   db.query(userQuery, (err, results) => {
     if (err) {
       console.error('Error fetching user data:', err);
@@ -351,13 +387,13 @@ app.post('/api/addToCart', (req, res) => {
 
     const tableName = `user_cart_${username.replace(/[^a-zA-Z0-9_]/g, '_')}`;
 
-   
+
     const insertCartQuery = `
       INSERT INTO ${tableName} (user_id, restaurant_name, menu_item, quantity, price, total_price, food_image)
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
-   
+
     const updateTokensQuery = 'UPDATE users SET tokens = COALESCE(tokens, 0) + ? WHERE username = ?';
 
     // Start transaction to ensure atomic operations
@@ -376,10 +412,10 @@ app.post('/api/addToCart', (req, res) => {
           });
         }
 
-     
+
         const tokensToAdd = Math.floor(total_price / 100) * 5;
 
-       
+
         db.query(updateTokensQuery, [tokensToAdd, username], (err) => {
           if (err) {
             console.error('Error updating tokens:', err);
@@ -388,7 +424,7 @@ app.post('/api/addToCart', (req, res) => {
             });
           }
 
-         
+
           db.commit((err) => {
             if (err) {
               console.error('Transaction commit error:', err);
@@ -397,7 +433,7 @@ app.post('/api/addToCart', (req, res) => {
               });
             }
 
-            
+
             res.status(200).json({ success: true, message: 'Item added to cart and tokens updated successfully' });
           });
         });
@@ -431,7 +467,7 @@ app.get('/api/getCartItems/:username', (req, res) => {
     let completedRequests = 0;
 
     cartResults.forEach(item => {
-      const restaurantTableName = item.restaurant_name.replace(/[^a-zA-Z0-9_]/g, '_'); 
+      const restaurantTableName = item.restaurant_name.replace(/[^a-zA-Z0-9_]/g, '_');
 
       const imageQuery = `SELECT food_image FROM ${restaurantTableName} WHERE menu_item = ?`;
       db.query(imageQuery, [item.menu_item], (err, imageResults) => {
@@ -449,14 +485,14 @@ app.get('/api/getCartItems/:username', (req, res) => {
 
         completedRequests++;
 
-      
+
         if (completedRequests === cartResults.length) {
           res.json({ success: true, data: modifiedResults });
         }
       });
     });
 
-    
+
     if (cartResults.length === 0) {
       res.json({ success: true, data: modifiedResults });
     }
@@ -497,7 +533,7 @@ app.delete('/api/removeCartItem/:username/:menu_item', (req, res) => {
 app.post('/api/placeOrder', (req, res) => {
   const { username, items, grandTotal, tokensToAdd } = req.body;
 
-  console.log('Received Order Data:', req.body);  
+  console.log('Received Order Data:', req.body);
 
   // Validate input
   if (!Array.isArray(items) || items.length === 0) {
@@ -562,7 +598,7 @@ app.post('/api/placeOrder', (req, res) => {
               });
             }
 
-         
+
             db.commit((err) => {
               if (err) {
                 console.error('Transaction commit error:', err);
@@ -571,7 +607,7 @@ app.post('/api/placeOrder', (req, res) => {
                 });
               }
 
-             
+
               res.json({ success: true });
             });
           });
@@ -637,7 +673,7 @@ app.get('/api/getUserOrders/:username', (req, res) => {
 
 // mealtokens
 app.get('/api/getUserTokens', (req, res) => {
- 
+
   const sql = 'SELECT user_id FROM user_details LIMIT 1';
 
   db.query(sql, (err, userDetails) => {
@@ -652,7 +688,7 @@ app.get('/api/getUserTokens', (req, res) => {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-   
+
     const userId = userDetails[0].user_id;
     console.log('User ID:', userId);
 
@@ -743,10 +779,10 @@ app.post('/api/donateTokens', (req, res) => {
 // contact
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail', 
+  service: 'gmail',
   auth: {
     user: 'cvinayak542@gmail.com',
-      pass: 'acaz kqtb bjpl zfsw'
+    pass: 'acaz kqtb bjpl zfsw'
   }
 });
 
@@ -754,8 +790,8 @@ app.post('/api/sendEmail', (req, res) => {
   const { name, email, subject, message } = req.body;
 
   const mailOptions = {
-    from: 'cvinayak542@gmail.com', 
-    replyTo: email, 
+    from: 'cvinayak542@gmail.com',
+    replyTo: email,
     to: 'cvinayak87@gmail.com',
     subject: subject,
     html: `
@@ -765,13 +801,13 @@ app.post('/api/sendEmail', (req, res) => {
         <p><strong>Message:</strong></p>
         <p>${message.replace(/\n/g, '<br>')}</p>
     `
-};
+  };
 
   transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-          return res.json({ success: false, message: error.message });
-      }
-      res.json({ success: true, message: 'Email sent: ' + info.response });
+    if (error) {
+      return res.json({ success: false, message: error.message });
+    }
+    res.json({ success: true, message: 'Email sent: ' + info.response });
   });
 });
 
@@ -784,17 +820,17 @@ app.post('/api/sendConfirmationEmail', (req, res) => {
   const { email } = req.body;
 
   const mailOptions = {
-      from: 'cvinayak542@gmail.com',
-      to: email,
-      subject: 'Subscription Confirmation',
-      text: 'Thank you for subscribing to our newsletter! use CODE: NEWBEE! tO awail discount upto ₹100 Discount on your first order... Hurry Up.'
+    from: 'cvinayak542@gmail.com',
+    to: email,
+    subject: 'Subscription Confirmation',
+    text: 'Thank you for subscribing to our newsletter! use CODE: NEWBEE! tO awail discount upto ₹100 Discount on your first order... Hurry Up.'
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-          return res.json({ success: false, message: error.message });
-      }
-      res.json({ success: true, message: 'Email sent: ' + info.response });
+    if (error) {
+      return res.json({ success: false, message: error.message });
+    }
+    res.json({ success: true, message: 'Email sent: ' + info.response });
   });
 });
 
@@ -809,7 +845,7 @@ app.post('/api/applyCoupon', async (req, res) => {
     if (grandTotal <= 399) {
       return res.status(400).json({ success: false, message: 'Grand total must be above 399 to apply this coupon.' });
     }
-   
+
     db.query('SELECT username FROM user_details LIMIT 1', async (err, userResults) => {
       if (err) {
         console.error('Error querying user details:', err);
@@ -843,7 +879,7 @@ app.post('/api/applyCoupon', async (req, res) => {
           const discountedTotal = grandTotal - 100;
           const finalTotal = discountedTotal < 0 ? 0 : discountedTotal;
 
-          res.json({ success: true, message: 'Coupon applied successfully.', newTotal: finalTotal, discountAmount: discountAmount  });
+          res.json({ success: true, message: 'Coupon applied successfully.', newTotal: finalTotal, discountAmount: discountAmount });
         } else {
           res.status(400).json({ success: false, message: 'Invalid coupon code.' });
         }
@@ -873,10 +909,10 @@ app.get('/api/getUserProfile', (req, res) => {
       return;
     }
 
-   
+
     const getUserProfileSql = `SELECT id, name, contact AS phone, email, age, gender, country, city, pincode, address
     FROM users
-    WHERE id = ?`; 
+    WHERE id = ?`;
 
 
     db.query(getUserProfileSql, [userId], (err, userResults) => {
@@ -892,7 +928,78 @@ app.get('/api/getUserProfile', (req, res) => {
 });
 
 
+// recomendation
 
+app.get('/api/getRestaurantsByProduct', async (req, res) => {
+  const product = req.query.product;
+  const sql = 'SELECT id, name, address, open, close, contact, image FROM restaurant';
+
+  if (!product) {
+    return res.status(400).json({ success: false, message: 'Product parameter is missing' });
+  }
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      return res.status(500).json({ success: false, message: 'Database error' });
+    }
+
+    // Print the number of records present
+    console.log(product);
+    const restaurantNames = [];
+
+    // Loop through the results to store restaurant names
+    results.forEach(restaurant => {
+      // console.log('Restaurant name:', restaurant.name); // Log the name
+      restaurantNames.push(restaurant.name); // Add to the array
+    });
+
+    const formattedNames = restaurantNames.map(name => name.replace(/ /g, '_'));
+
+    // Track tables with products available
+    const tablesWithProduct = new Set();
+
+    // Check each formatted name in the database
+    let completedQueries = 0;
+    formattedNames.forEach(name => {
+      const query = 'SELECT item_category FROM ?? WHERE item_category = ?';
+
+      db.query(query, [name, product], (err, rows) => {
+        if (err) {
+          console.error('Error executing query for table', name, ':', err);
+          return;
+        }
+
+        if (rows.length > 0) {
+          console.log(`${name}: yes`);
+          tablesWithProduct.add(name);
+        } else {
+          console.log(`${name}: no`);
+        }
+
+        // Check if all queries are complete
+        completedQueries++;
+        if (completedQueries === formattedNames.length) {
+          // Filter results based on tables with products available
+          const filteredResults = results.filter(restaurant =>
+            tablesWithProduct.has(restaurant.name.replace(/ /g, '_'))
+          );
+
+          // Process the results for frontend
+          const modifiedResults = filteredResults.map(restaurant => {
+            if (restaurant.image) {
+              restaurant.image = `data:image/jpeg;base64,${Buffer.from(restaurant.image).toString('base64')}`;
+            }
+            return restaurant;
+          });
+
+          // Send response to the frontend
+          res.json({ success: true, data: modifiedResults });
+        }
+      });
+    });
+  });
+});
 
 
 app.listen(3000, () => {
