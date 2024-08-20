@@ -1051,10 +1051,7 @@ message-area
             // Scroll to the bottom
             messageList.scrollTop = messageList.scrollHeight;
         }
-        window.addEventListener('beforeunload', function (event) {
-
-            navigator.sendBeacon('http://localhost:3000/api/out');
-        });
+      
 
     </script>
 </body>
