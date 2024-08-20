@@ -411,32 +411,8 @@ app.post('/api/addToCart', (req, res) => {
             res.status(500).json({ success: false, error: 'Error inserting data into user cart' });
           });
         }
-
-
-        const tokensToAdd = Math.floor(total_price / 100) * 5;
-
-
-        db.query(updateTokensQuery, [tokensToAdd, username], (err) => {
-          if (err) {
-            console.error('Error updating tokens:', err);
-            return db.rollback(() => {
-              res.status(500).json({ success: false, error: 'Failed to update tokens' });
-            });
-          }
-
-
-          db.commit((err) => {
-            if (err) {
-              console.error('Transaction commit error:', err);
-              return db.rollback(() => {
-                res.status(500).json({ success: false, error: 'Transaction commit error' });
-              });
-            }
-
-
-            res.status(200).json({ success: true, message: 'Item added to cart and tokens updated successfully' });
-          });
-        });
+        res.status(200).json({ success: true, message: 'Item added to cart successfully' });
+        
       });
     });
   });
@@ -576,6 +552,7 @@ app.post('/api/placeOrder', (req, res) => {
             res.status(500).json({ success: false, message: 'Failed to insert order items' });
           });
         }
+        
 
         // Update user's tokens
         const updateTokensQuery = 'UPDATE users SET tokens = COALESCE(tokens, 0) + ? WHERE username = ?';
@@ -825,7 +802,7 @@ app.post('/api/sendConfirmationEmail', (req, res) => {
     subject: 'Subscription Confirmation',
     text: `Thank you for subscribing to our newsletter! Use CODE: NEWBEE! to avail up to ₹100 discount on your first order above ₹399. Hurry Up!
 
-    As a valued subscriber, you also receive a special coupon code for 20% off on orders above ₹500. Use CODE: SPECIAL20 to get this discount, valid only once per user. Don't miss out on this exclusive offer and stay tuned for more exciting updates and promotions!`
+    As a valued subscriber, you also receive a special coupon code for 20% off upto ₹100 on orders above ₹500. Use CODE: SPECIAL20 to get this discount, valid only once per user. Don't miss out on this exclusive offer and stay tuned for more exciting updates and promotions!`
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

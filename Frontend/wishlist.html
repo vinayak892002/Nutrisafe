@@ -72,7 +72,7 @@
 <body class="goto-here">
 	<div class="py-1 bg-primary">
 		<div class="container">
-			<div class="row no-gutters d-flex align-items-center px-md-0 justify-content-between" >
+			<div class="row no-gutters d-flex align-items-center px-md-0 justify-content-between">
 				<div class="col-md d-flex topper justify-content-center align-items-center">
 					<div class="icon mr-2 d-flex justify-content-center align-items-center">
 						<span class="icon-phone2"></span>
@@ -91,7 +91,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 
 	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 		style="padding: 0 20px 0 20px;" id="ftco-navbar">
@@ -655,6 +655,10 @@
 					})
 					.catch(error => console.error('Error:', error));
 			});
+		});
+		window.addEventListener('beforeunload', function (event) {
+
+			navigator.sendBeacon('http://localhost:3000/api/out');
 		});
 	</script>
 

@@ -139,7 +139,7 @@
         <div class="col-md-9 ftco-animate text-center">
           <h1 class="mb-0 bread" style="color:wheat;font-size: 5rem;">
             Restaurants</h1>
-          
+
         </div>
       </div>
     </div>
@@ -149,7 +149,7 @@
     <div class="container">
       <div class="row justify-content-center mb-3 pb-3">
         <div class="col-md-12 heading-section text-center ftco-animate">
-          
+
         </div>
       </div>
       <div class="row" id="restaurants-container">
@@ -246,46 +246,46 @@
   <script>
 
 
-document.addEventListener('DOMContentLoaded', function () {
-  async function fetchRestaurants() {
-    const restaurantsContainer = document.getElementById('restaurants-container');
-    
-    if (!restaurantsContainer) {
-      console.error('Restaurants container not found.');
-      return;
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+      async function fetchRestaurants() {
+        const restaurantsContainer = document.getElementById('restaurants-container');
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const product = urlParams.get('product'); // Get the product name from the URL query parameter
+        if (!restaurantsContainer) {
+          console.error('Restaurants container not found.');
+          return;
+        }
 
-    if (!product) {
-      console.error('No product specified in the URL.');
-      restaurantsContainer.innerHTML = '<p>No product specified.</p>';
-      return;
-    }
+        const urlParams = new URLSearchParams(window.location.search);
+        const product = urlParams.get('product'); // Get the product name from the URL query parameter
 
-    restaurantsContainer.innerHTML = '<p>Loading restaurants...</p>';
+        if (!product) {
+          console.error('No product specified in the URL.');
+          restaurantsContainer.innerHTML = '<p>No product specified.</p>';
+          return;
+        }
 
-    try {
-      const response = await fetch(`http://localhost:3000/api/getRestaurantsByProduct?product=${encodeURIComponent(product)}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+        restaurantsContainer.innerHTML = '<p>Loading restaurants...</p>';
 
-      const data = await response.json();
-      console.log('Data parsed:', data);
+        try {
+          const response = await fetch(`http://localhost:3000/api/getRestaurantsByProduct?product=${encodeURIComponent(product)}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
 
-      if (data.success) {
-        console.log('Restaurant data:', data.data);
+          const data = await response.json();
+          console.log('Data parsed:', data);
 
-        // Clear the loading message
-        restaurantsContainer.innerHTML = '';
+          if (data.success) {
+            console.log('Restaurant data:', data.data);
 
-        data.data.forEach(restaurant => {
-          const restaurantElement = document.createElement('div');
-          restaurantElement.classList.add('col-12', 'mb-4'); // Full width for each entry
+            // Clear the loading message
+            restaurantsContainer.innerHTML = '';
 
-          restaurantElement.innerHTML = `
+            data.data.forEach(restaurant => {
+              const restaurantElement = document.createElement('div');
+              restaurantElement.classList.add('col-12', 'mb-4'); // Full width for each entry
+
+              restaurantElement.innerHTML = `
             <div class="blog-entry align-self-stretch d-md-flex">
               <a href="${restaurant.shopLink}" class="block-20" style="background-image: url('${restaurant.image}'); background-color:black; border-radius: 20px;"></a>
               <div class="text d-block pl-md-4" style="padding-top: 20px;">
@@ -297,24 +297,27 @@ document.addEventListener('DOMContentLoaded', function () {
               </div>
             </div>
           `;
-          restaurantsContainer.appendChild(restaurantElement);
-        });
+              restaurantsContainer.appendChild(restaurantElement);
+            });
 
-      } else {
-        console.error('Data success is false:', data);
-        restaurantsContainer.innerHTML = '<p>Failed to load restaurant data.</p>';
+          } else {
+            console.error('Data success is false:', data);
+            restaurantsContainer.innerHTML = '<p>Failed to load restaurant data.</p>';
+          }
+        } catch (error) {
+          console.error('Error fetching restaurant data:', error);
+          restaurantsContainer.innerHTML = '<p>Error loading restaurant data. Please try again later.</p>';
+        }
       }
-    } catch (error) {
-      console.error('Error fetching restaurant data:', error);
-      restaurantsContainer.innerHTML = '<p>Error loading restaurant data. Please try again later.</p>';
-    }
-  }
 
-  // Call the function to fetch and display restaurants
-  fetchRestaurants();
-});
+      // Call the function to fetch and display restaurants
+      fetchRestaurants();
+    });
 
+    window.addEventListener('beforeunload', function (event) {
 
+      navigator.sendBeacon('http://localhost:3000/api/out');
+    });
 
 
 

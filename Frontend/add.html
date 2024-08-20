@@ -282,7 +282,8 @@
                     </div>
                     <div class="form-group">
                         <label for="foodImage">Shop Image:</label>
-                        <input type="file" class="form-control-file" id="foodImage" name="foodImage" accept="image/*" required>
+                        <input type="file" class="form-control-file" id="foodImage" name="foodImage" accept="image/*"
+                            required>
                     </div>
                     <div class="form-group center-submit">
                         <button type="submit" class="btn btn-primary" style="margin-bottom: 30px;">Submit</button>
@@ -457,6 +458,10 @@
                     alert('An error occurred while adding the menu item.');
                 });
         }
+        window.addEventListener('beforeunload', function (event) {
+
+            navigator.sendBeacon('http://localhost:3000/api/out');
+        });
 
 
     </script>

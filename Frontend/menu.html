@@ -393,25 +393,25 @@
                             menuItemRow.classList.add('text-center');
 
                             menuItemRow.innerHTML = `
-        <td></td>
-         <td class="image-prod">
-          <div class="img" style="background-image: url('${item.food_image}'); border-radius:50%"></div>
-        </td>
-        <td class="product-name">
-            <h3>${item.menu_item}</h3>
-        </td>
-        <td class="price">
-            <span id="price-value">${item.item_price.toFixed(2)}</span>
-        </td>
-        <td class="quantity">
-            <button class="decrement" onclick="changeQuantity('${index}', -1)">-</button>
-            <span id="quantity-value-${index}">0</span>
-            <button class="increment" onclick="changeQuantity('${index}', 1)">+</button>
-        </td>
-        <td class="total">
-            <button class="btn btn-primary py-2 px-3" onclick="addToCart(${index}, '${item.menu_item}', ${item.item_price}, '${item.food_image}', '${item.restaurant_id}', '${item.restaurant_name}')">Add to cart</button>
-        </td>
-    `;
+                                <td></td>
+                                <td class="image-prod">
+                                <div class="img" style="background-image: url('${item.food_image}'); border-radius:50%"></div>
+                                </td>
+                                <td class="product-name">
+                                    <h3>${item.menu_item}</h3>
+                                </td>
+                                <td class="price">
+                                    <span id="price-value">${item.item_price.toFixed(2)}</span>
+                                </td>
+                                <td class="quantity">
+                                    <button class="decrement" onclick="changeQuantity('${index}', -1)">-</button>
+                                    <span id="quantity-value-${index}">0</span>
+                                    <button class="increment" onclick="changeQuantity('${index}', 1)">+</button>
+                                </td>
+                                <td class="total">
+                                    <button class="btn btn-primary py-2 px-3" onclick="addToCart(${index}, '${item.menu_item}', ${item.item_price}, '${item.food_image}', '${item.restaurant_id}', '${item.restaurant_name}')">Add to cart</button>
+                                </td>
+                            `;
 
                             menuContainer.appendChild(menuItemRow);
                         });
@@ -438,13 +438,13 @@
         }
 
 
-        // Function to get query parameter by name
+
         function getQueryParam(name) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(name);
         }
 
-        // Extract restaurant name from URL
+
         const restaurantName = getQueryParam('shop');
 
 
@@ -456,7 +456,7 @@
 
 
             if (quantity > 0) {
-                const totalPrice = itemPrice * quantity; // Calculate total price
+                const totalPrice = itemPrice * quantity;
 
                 console.log({
                     restaurant_name: restaurantName,
@@ -491,9 +491,11 @@
                     const data = await response.json();
                     if (data.success) {
                         alert('Item added to cart successfully!');
+                        location.reload();
                     } else {
                         alert('Failed to add item to cart.');
                     }
+
                 } catch (error) {
                     console.error('Error adding item to cart:', error);
                     alert('Error adding item to cart. Please try again later.');
@@ -502,8 +504,15 @@
                 alert('Please select a quantity greater than 0.');
             }
         }
+        window.addEventListener('beforeunload', function (event) {
 
+            navigator.sendBeacon('http://localhost:3000/api/out');
+        });
 
+        window.addEventListener('beforeunload', function (event) {
+
+            navigator.sendBeacon('http://localhost:3000/api/out');
+        });
 
     </script>
 

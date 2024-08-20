@@ -301,9 +301,12 @@
       // Call the function to fetch and display restaurants
       fetchRestaurants();
     });
+    window.addEventListener('beforeunload', function (event) {
+
+      navigator.sendBeacon('http://localhost:3000/api/out');
+    });
 
 
-    
 
 
 

@@ -406,39 +406,43 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript">
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Fetch user data from the API or database
-  fetch('http://localhost:3000/api/getUserProfile') // Replace with your API endpoint
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('User data received:', data); // Log data to check the structure
+    document.addEventListener("DOMContentLoaded", function () {
+      // Fetch user data from the API or database
+      fetch('http://localhost:3000/api/getUserProfile') // Replace with your API endpoint
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('User data received:', data); // Log data to check the structure
 
-      if (data) {
-        // Update the user information
-        document.getElementById('user-name').textContent = data.name || "N/A";
-        document.getElementById('username').textContent = data.name || "N/A";
-        document.getElementById('user-address').textContent = data.address || "N/A";
-        document.getElementById('user-age').textContent = `${data.age || "N/A"} Yr`;
-        document.getElementById('user-city').textContent = data.city || "N/A";
-        document.getElementById('user-gender').textContent = data.gender || "N/A";
-        document.getElementById('user-email').innerHTML = `<a href="mailto:${data.email}">${data.email}</a>` || "N/A";
-        document.getElementById('user-phone').textContent = data.contact || "N/A"; // Ensure field names match
+          if (data) {
+            // Update the user information
+            document.getElementById('user-name').textContent = data.name || "N/A";
+            document.getElementById('username').textContent = data.name || "N/A";
+            document.getElementById('user-address').textContent = data.address || "N/A";
+            document.getElementById('user-age').textContent = `${data.age || "N/A"} Yr`;
+            document.getElementById('user-city').textContent = data.city || "N/A";
+            document.getElementById('user-gender').textContent = data.gender || "N/A";
+            document.getElementById('user-email').innerHTML = `<a href="mailto:${data.email}">${data.email}</a>` || "N/A";
+            document.getElementById('user-phone').textContent = data.contact || "N/A"; // Ensure field names match
 
-        // Update the profile image
-        if (data.profileImage) {
-          document.getElementById('profile-image').src = data.profileImage;
-        }
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching user data:', error);
+            // Update the profile image
+            if (data.profileImage) {
+              document.getElementById('profile-image').src = data.profileImage;
+            }
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+        });
     });
-});
+    window.addEventListener('beforeunload', function (event) {
+
+      navigator.sendBeacon('http://localhost:3000/api/out');
+    });
 
 
 
