@@ -298,17 +298,18 @@
                   <p id="user-gender">Loading...</p>
                 </div>
                 <div class="media">
-                  <label>E-mail</label>
+                  <label>Mail</label>
                   <p id="user-email"><a href="#">Loading...</a></p>
                 </div>
                 <div class="media">
                   <label>Phone</label>
-                  <p id="user-phone">Loading...</p>
+                  <p id="userphone">Loading...</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <div class="col-lg-6">
           <div class="about-avatar">
             <img id="profile-image" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Profile Image">
@@ -407,8 +408,15 @@
   <script type="text/javascript">
 
     document.addEventListener("DOMContentLoaded", function () {
-      // Fetch user data from the API or database
-      fetch('http://localhost:3000/api/getUserProfile') // Replace with your API endpoint
+      const userId = sessionStorage.getItem('id');
+
+      if (!userId) {
+        console.error('No user ID found in session storage.');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      fetch(`http://localhost:3000/api/getUserProfile/${userId}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
@@ -416,32 +424,32 @@
           return response.json();
         })
         .then(data => {
-          console.log('User data received:', data); // Log data to check the structure
+          console.log('User data received:', data);
 
-          if (data) {
-            // Update the user information
-            document.getElementById('user-name').textContent = data.name || "N/A";
-            document.getElementById('username').textContent = data.name || "N/A";
-            document.getElementById('user-address').textContent = data.address || "N/A";
-            document.getElementById('user-age').textContent = `${data.age || "N/A"} Yr`;
-            document.getElementById('user-city').textContent = data.city || "N/A";
-            document.getElementById('user-gender').textContent = data.gender || "N/A";
-            document.getElementById('user-email').innerHTML = `<a href="mailto:${data.email}">${data.email}</a>` || "N/A";
-            document.getElementById('user-phone').textContent = data.contact || "N/A"; // Ensure field names match
+      
 
-            // Update the profile image
-            if (data.profileImage) {
-              document.getElementById('profile-image').src = data.profileImage;
-            }
+          // Update HTML elements with received data
+          document.getElementById('user-name').textContent = data.name || "N/A";
+          document.getElementById('username').textContent = data.name || "N/A";
+          document.getElementById('user-age').textContent = data.age || "N/A";
+          document.getElementById('user-city').textContent = data.city || "N/A";
+          document.getElementById('user-email').textContent = data.email || "N/A";
+          document.getElementById('userphone').textContent = data.phone || "N/A";
+          document.getElementById('user-gender').textContent = data.gender || "N/A";
+          
+          document.getElementById('user-phone').textContent = data.contact ? data.contact : "N/A";
+
+          // Handle profile image
+          if (data.profileImage) {
+            document.getElementById('profile-image').src = data.profileImage;
+          } else {
+            document.getElementById('profile-image').src = 'path/to/default-image.png'; // Fallback image
           }
         })
         .catch(error => {
           console.error('Error fetching user data:', error);
         });
     });
-   
-
-
   </script>
 
 </body>

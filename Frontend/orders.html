@@ -312,24 +312,17 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Fetch the username from the API
-            fetch('http://localhost:3000/api/getUsername')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success && data.username) {
-                        const username = data.username;
+            // Retrieve the username from sessionStorage
+            const username = window.sessionStorage.getItem('username');
 
-                        // Fetch orders for the retrieved username
-                        return fetch(`http://localhost:3000/api/getUserOrders/${username}`);
-                    } else {
-                        throw new Error('Username not found');
-                    }
-                })
+            if (!username) {
+                window.location.href = 'login.html';
+                console.error('Username not found in sessionStorage.');
+                return;
+            }
+
+            // Fetch orders for the retrieved username
+            fetch(`http://localhost:3000/api/getUserOrders/${username}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -373,7 +366,8 @@
                 .catch(error => console.error('Error:', error));
         });
 
-        
+
+
     </script>
 
 </body>

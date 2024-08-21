@@ -373,7 +373,16 @@
             $('#updateForm').on('submit', function (e) {
                 e.preventDefault();
 
+                const userid = sessionStorage.getItem('id'); // Retrieve the userid from session storage
+
+                if (!userid) {
+                    console.error('No User-ID found in session storage.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+
                 const formData = {
+                    userid: userid, // Include userid in the form data
                     name: $('#name').val(),
                     age: $('#age').val(),
                     email: $('#email').val(),
@@ -384,10 +393,11 @@
                     contact: $('#contact').val(),
                     address: $('#address').val()
                 };
-                console.log(formData)
+
+                console.log(formData);
 
                 $.ajax({
-                    url: 'http://localhost:3000/api/updateUser', // Change port if necessary
+                    url: 'http://localhost:3000/api/updateUser', // Adjust the URL if necessary
                     type: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(formData),
@@ -403,10 +413,10 @@
                         alert('An error occurred: ' + xhr.responseText);
                     }
                 });
-
             });
         });
-       
+
+
 
     </script>
 </body>

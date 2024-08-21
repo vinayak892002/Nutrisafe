@@ -10,6 +10,7 @@ const path = require('path');
 const app = express();
 
 
+
 app.use(cors());
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
@@ -75,7 +76,6 @@ app.post('/api/signup', (req, res) => {
 });
 
 
-
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -93,27 +93,20 @@ app.post('/api/login', (req, res) => {
 
     const user = results[0];
 
-
     if (password === user.password) {
-      // Insert into user_details table
-      const insertDetailsSql = 'INSERT INTO user_details (username, password, user_id) VALUES (?, ?, ?)';
-      db.query(insertDetailsSql, [username, password, user.id], (err) => {
-        if (err) {
-          console.error('Error inserting user details:', err);
-          return res.status(500).json({ success: false, message: 'Failed to save user details' });
-        }
-
-        // Respond with success message
-        res.json({
-          success: true,
-          message: 'Login successful and user details saved'
-        });
+      // Respond with success message and user details
+      res.json({
+        success: true,
+        message: 'Login successful',
+        username: username,
+        id: user.id
       });
     } else {
       res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
   });
 });
+
 //logout
 app.post('/api/out', (req, res) => {
   // SQL query to delete all records from the user_details table
@@ -129,27 +122,6 @@ app.post('/api/out', (req, res) => {
   });
 });
 
-//getusername
-// Endpoint to get the username from the user_details table
-app.get('/api/getUsername', (req, res) => {
-  const sql = 'SELECT username FROM user_details LIMIT 1';
-  db.query(sql, (err, results) => {
-    if (err) {
-      console.error('Error querying database:', err);
-      return res.status(500).json({ success: false, message: 'Database error' });
-    }
-
-    if (results.length === 0) {
-      return res.status(404).json({ success: false, message: 'User details not found' });
-    }
-
-    const userDetails = results[0];
-    res.json({
-      success: true,
-      username: userDetails.username
-    });
-  });
-});
 
 // recomendation
 
@@ -255,14 +227,24 @@ app.get('/api/getRestaurants', (req, res) => {
 });
 
 app.post('/api/updateUser', (req, res) => {
-  const { name, age, email, gender, country, city, pincode, contact, address } = req.body;
-  console.log(req.body)
-  if (!name || !age || !email || !gender || !country || !city || !pincode || !contact || !address) {
+  const { userid, name, age, email, gender, country, city, pincode, contact, address } = req.body;
+
+  
+  console.log(req.body);
+
+  
+  if (!userid || !name || !age || !email || !gender || !country || !city || !pincode || !contact || !address) {
     return res.status(400).json({ success: false, message: 'All fields are required' });
   }
 
-  const sql = `UPDATE users SET name = ?, age = ?, gender = ?, country = ?, city = ?, pincode = ?, contact = ?, address = ? WHERE email = ?`;
-  db.query(sql, [name, age, gender, country, city, pincode, contact, address, email], (err, result) => {
+  
+  const sql = `
+    UPDATE users 
+    SET name = ?, age = ?, email = ?, gender = ?, country = ?, city = ?, pincode = ?, contact = ?, address = ? 
+    WHERE id = ?`;
+
+  // Execute the query with the provided data
+  db.query(sql, [name, age, email, gender, country, city, pincode, contact, address, userid], (err, result) => {
     if (err) {
       console.error('Error updating user details:', err);
       return res.status(500).json({ success: false, message: 'Database error' });
@@ -412,7 +394,7 @@ app.post('/api/addToCart', (req, res) => {
           });
         }
         res.status(200).json({ success: true, message: 'Item added to cart successfully' });
-        
+
       });
     });
   });
@@ -552,7 +534,7 @@ app.post('/api/placeOrder', (req, res) => {
             res.status(500).json({ success: false, message: 'Failed to insert order items' });
           });
         }
-        
+
 
         // Update user's tokens
         const updateTokensQuery = 'UPDATE users SET tokens = COALESCE(tokens, 0) + ? WHERE username = ?';
@@ -649,52 +631,33 @@ app.get('/api/getUserOrders/:username', (req, res) => {
 });
 
 // mealtokens
-app.get('/api/getUserTokens', (req, res) => {
+app.get('/api/getUserTokens/:userid', (req, res) => {
+  const userId = req.params.userid;
 
-  const sql = 'SELECT user_id FROM user_details LIMIT 1';
+  const tokenQuery = 'SELECT tokens FROM users WHERE id = ?';
 
-  db.query(sql, (err, userDetails) => {
+  db.query(tokenQuery, [userId], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
       return res.status(500).json({ success: false, message: 'Database error' });
     }
 
-    console.log('User Details:', userDetails);
-
-    if (!userDetails || userDetails.length === 0) {
-      return res.status(404).json({ success: false, message: 'User not found' });
+    if (!results || results.length === 0) {
+      return res.status(404).json({ success: false, message: 'Tokens not found for the provided user ID' });
     }
 
-
-    const userId = userDetails[0].user_id;
-    console.log('User ID:', userId);
-
-    const tokenQuery = 'SELECT tokens FROM users WHERE id = ?';
-
-    db.query(tokenQuery, [userId], (err, results) => {
-      if (err) {
-        console.error('Error executing token query:', err);
-        return res.status(500).json({ success: false, message: 'Failed to fetch tokens' });
-      }
-
-      console.log('Token Results:', results);
-
-      if (!results || results.length === 0) {
-        return res.status(404).json({ success: false, message: 'Tokens not found' });
-      }
-
-      // Get the tokens value
-      const tokens = results[0].tokens;
-      res.json({ success: true, tokens });
-    });
+    // Get the tokens value
+    const tokens = results[0].tokens;
+    res.json({ success: true, tokens });
   });
 });
-
 
 
 //donate
 app.post('/api/donateTokens', (req, res) => {
   const grandTotal = req.body.grandTotal;
+  const userId = req.body.userid;
+
 
   // Validate grandTotal
   if (!grandTotal || isNaN(grandTotal) || grandTotal <= 0) {
@@ -702,56 +665,42 @@ app.post('/api/donateTokens', (req, res) => {
     return res.status(400).json({ success: false, message: 'Invalid grand total amount' });
   }
 
-  // Fetch the user ID from user_details
-  const userSql = 'SELECT user_id FROM user_details LIMIT 1';
-  db.query(userSql, (err, userDetails) => {
+
+  // Fetch current tokens from the users table
+  const tokenQuery = 'SELECT tokens FROM users WHERE id = ?';
+  db.query(tokenQuery, [userId], (err, results) => {
     if (err) {
-      console.error('Error fetching user details:', err);
+      console.error('Error fetching tokens:', err);
       return res.status(500).json({ success: false, message: 'Database error' });
     }
 
-    if (!userDetails || userDetails.length === 0) {
-      console.error('User not found');
-      return res.status(404).json({ success: false, message: 'User not found' });
+    if (!results || results.length === 0) {
+      console.error('Tokens not found');
+      return res.status(404).json({ success: false, message: 'Tokens not found' });
     }
 
-    const userId = userDetails[0].user_id;
+    const currentTokens = results[0].tokens;
 
-    // Fetch current tokens from the users table
-    const tokenQuery = 'SELECT tokens FROM users WHERE id = ?';
-    db.query(tokenQuery, [userId], (err, results) => {
+    if (currentTokens < grandTotal) {
+      console.error('Insufficient tokens to donate');
+      return res.status(400).json({ success: false, message: 'Insufficient tokens to donate' });
+    }
+
+    // Deduct tokens
+    const updatedTokens = currentTokens - grandTotal;
+    const updateQuery = 'UPDATE users SET tokens = ? WHERE id = ?';
+
+    db.query(updateQuery, [updatedTokens, userId], (err) => {
       if (err) {
-        console.error('Error fetching tokens:', err);
-        return res.status(500).json({ success: false, message: 'Database error' });
+        console.error('Error updating tokens:', err);
+        return res.status(500).json({ success: false, message: 'Failed to update tokens' });
       }
 
-      if (!results || results.length === 0) {
-        console.error('Tokens not found');
-        return res.status(404).json({ success: false, message: 'Tokens not found' });
-      }
-
-      const currentTokens = results[0].tokens;
-
-      if (currentTokens < grandTotal) {
-        console.error('Insufficient tokens to donate');
-        return res.status(400).json({ success: false, message: 'Insufficient tokens to donate' });
-      }
-
-      // Deduct tokens
-      const updatedTokens = currentTokens - grandTotal;
-      const updateQuery = 'UPDATE users SET tokens = ? WHERE id = ?';
-
-      db.query(updateQuery, [updatedTokens, userId], (err) => {
-        if (err) {
-          console.error('Error updating tokens:', err);
-          return res.status(500).json({ success: false, message: 'Failed to update tokens' });
-        }
-
-        res.json({ success: true, updatedTokens });
-      });
+      res.json({ success: true, updatedTokens });
     });
   });
 });
+
 
 // contact
 
@@ -853,17 +802,17 @@ app.post('/api/applyCoupon', async (req, res) => {
         }
 
         if (couponCode === 'NEWBEE!') {
-          discountAmount=100;
+          discountAmount = 100;
           const discountedTotal = grandTotal - discountAmount;
           const finalTotal = discountedTotal < 0 ? 0 : discountedTotal;
 
-          res.json({ success: true, message: 'Coupon applied successfully.', newTotal: finalTotal,discountAmount });
+          res.json({ success: true, message: 'Coupon applied successfully.', newTotal: finalTotal, discountAmount });
         } else if (couponCode === 'SPECIAL20') {
           if (grandTotal >= 500) {
             const discountAmount = Math.min(grandTotal * 0.20, 100); // Calculate 20% or ₹100, whichever is lowe
-            const discountedTotal = grandTotal -  Math.min(grandTotal * 0.20, 100);
+            const discountedTotal = grandTotal - Math.min(grandTotal * 0.20, 100);
             const finalTotal = discountedTotal < 0 ? 0 : discountedTotal;
-            res.json({ success: true, message: 'Coupon applied successfully.', newTotal: finalTotal, discountAmount});
+            res.json({ success: true, message: 'Coupon applied successfully.', newTotal: finalTotal, discountAmount });
           }
         }
         else {
@@ -879,40 +828,41 @@ app.post('/api/applyCoupon', async (req, res) => {
 
 
 // profile
-app.get('/api/getUserProfile', (req, res) => {
+app.get('/api/getUserProfile/:userId', (req, res) => {
+  
+  const userId = req.params.userId;
 
-  const getUserIdSql = 'SELECT user_id FROM user_details LIMIT 1';
+  console.log(`Received request to get user profile for userId: ${userId}`);
 
-  db.query(getUserIdSql, (err, userDetailsResults) => {
-    if (err) {
-      console.error('Error fetching user ID from user_details:', err);
-      res.status(500).json({ error: 'Failed to fetch user ID' });
-      return;
-    }
+  if (!userId) {
+    console.error('User ID is missing in the request parameters');
+    return res.status(400).json({ error: 'User ID is required' });
+  }
 
-    const userId = userDetailsResults[0]?.user_id;
-    if (!userId) {
-      res.status(404).json({ error: 'User ID not found' });
-      return;
-    }
-
-
-    const getUserProfileSql = `SELECT id, name, contact AS phone, email, age, gender, country, city, pincode, address
+  
+  const getUserProfileSql = `SELECT id, name, contact AS phone, email, age, gender, country, city, pincode, address
     FROM users
     WHERE id = ?`;
 
+  // Query the database
+  db.query(getUserProfileSql, [userId], (err, userResults) => {
+    if (err) {
+      console.error('Error fetching user profile:', err);
+      return res.status(500).json({ error: 'Failed to fetch user profile' });
+    }
 
-    db.query(getUserProfileSql, [userId], (err, userResults) => {
-      if (err) {
-        console.error('Error fetching user profile:', err);
-        res.status(500).json({ error: 'Failed to fetch user profile' });
-        return;
-      }
+    if (userResults.length === 0) {
+      console.log(`No user found with id: ${userId}`);
+      return res.status(404).json({ error: 'User not found' });
+    }
 
-      res.json(userResults[0] || {});
-    });
+    // Send the user profile as the response
+    res.json(userResults[0]);
   });
 });
+
+
+
 
 
 // recomendation

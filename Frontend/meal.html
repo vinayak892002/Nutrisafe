@@ -594,8 +594,16 @@
             document.getElementById('grand-total').innerText = grandTotal;
         }
         document.addEventListener('DOMContentLoaded', function () {
+            const userid = sessionStorage.getItem('id');
+
+            if (!userid) {
+                console.error('No User-ID found in session storage.');
+                window.location.href = 'login.html';
+                return;
+            }
+
             // Fetch tokens from the API
-            fetch('http://localhost:3000/api/getUserTokens')
+            fetch(`http://localhost:3000/api/getUserTokens/${userid}`)
                 .then(response => {
                     if (!response.ok) {
                         return response.text().then(text => {
@@ -614,6 +622,7 @@
                 });
         });
 
+
         // donate
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.btn.btn-primary').addEventListener('click', () => {
@@ -630,12 +639,19 @@
         });
 
         function donateTokens(grandTotal) {
+            const userid = sessionStorage.getItem('id');
+
+            if (!userid) {
+                console.error('No User-ID found in session storage.');
+                window.location.href = 'login.html';
+                return;
+            }
             fetch('http://localhost:3000/api/donateTokens', {  // Ensure this URL matches the backend route
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ grandTotal }),
+                body: JSON.stringify({ userid, grandTotal }),
             })
                 .then(response => {
                     if (!response.ok) {
@@ -657,7 +673,7 @@
                     alert('An error occurred. Please try again later.');
                 });
         }
-        
+
 
     </script>
 </body>
