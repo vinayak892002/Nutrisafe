@@ -138,7 +138,7 @@
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
 				<li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-				<li class="nav-item"><a href="community.html" class="nav-link">Community</a></li>
+				<li class="nav-item"><a href="community.html" class="nav-link">Queries</a></li>
 				<li class="nav-item"><a href="blog.html" class="nav-link">Stores</a></li>
 				<li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
 				<li class="nav-item"><a href="profile.html" class="nav-link">Profile</a></li>
@@ -151,7 +151,7 @@
 						User
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="login.html" style="color: red; font-size: 12px;">LogOut</a>
+						<li><a id="l" class="dropdown-item" href="#" style="color: red; font-size: 12px;">LogOut</a>
 						</li>
 						<li><a class="dropdown-item" href="update.html" style="font-size: 12px;">Update Info</a></li>
 						<li><a class="dropdown-item" href="add.html" style="font-size: 12px;">ADD</a></li>
@@ -539,9 +539,9 @@
 										West, Mumbai
 										400050</span></li>
 								<li><a href="#"><span class="icon icon-phone"></span><span class="text">+91
-											8208877372</span></a></li>
+											0000000000</span></a></li>
 								<li><a href="#"><span class="icon icon-envelope"></span><span
-											class="text">info@yourdomain.com</span></a></li>
+											class="text">cvinayak542@gmail.com</span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -550,36 +550,7 @@
 
 		</div>
 	</footer>
-	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">SELECT ANY ONE
-						OPTION</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-4">
-							<button type="button" class="btn btn-primary btn-rounded btn-block"
-								data-mdb-ripple-init>Barcode</button>
-						</div>
-						<div class="col-4">
-							<button type="button" class="btn btn-primary btn-rounded btn-block"
-								data-mdb-ripple-init>OCR</button>
-						</div>
-						<div class="col-4">
-							<button type="button" class="btn btn-primary btn-rounded btn-block"
-								data-mdb-ripple-init>Text Search</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 
 	<!-- loader -->
 	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
@@ -607,6 +578,15 @@
 	<script src="js/main.js"></script>
 
 	<script>
+		  document.addEventListener("DOMContentLoaded", function () {
+      const userId = sessionStorage.getItem('id');
+
+      if (!userId) {
+        console.error('No user ID found in session storage.');
+        window.location.href = 'login.html';
+        return;
+      }
+	});
 		document.getElementById('subscribe-form').addEventListener('submit', function (e) {
 			e.preventDefault();
 
@@ -640,8 +620,20 @@
 					.catch(error => console.error('Error:', error));
 			}
 		});
+		document.getElementById('l').addEventListener('click', function (event) {
+			event.preventDefault();
 
-// jssadj
+			// Set sessionActive to false before clearing session storage
+			sessionStorage.setItem('sessionActive', 'false');
+
+			// Clear all session storage items
+			sessionStorage.clear();
+
+			// Redirect to the login page
+			window.location.href = '/Frontend/login.html';
+		});
+
+		// jssadj
 		document.getElementById('searchInput').addEventListener('keydown', function (event) {
 			if (event.key === 'Enter') {
 				event.preventDefault();
@@ -669,7 +661,7 @@
 					});
 			}
 		});
-		
+
 
 
 	</script>
