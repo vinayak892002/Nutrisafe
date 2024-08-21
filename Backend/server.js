@@ -243,7 +243,7 @@ app.post('/api/updateUser', (req, res) => {
     SET name = ?, age = ?, email = ?, gender = ?, country = ?, city = ?, pincode = ?, contact = ?, address = ? 
     WHERE id = ?`;
 
-  // Execute the query with the provided data
+
   db.query(sql, [name, age, email, gender, country, city, pincode, contact, address, userid], (err, result) => {
     if (err) {
       console.error('Error updating user details:', err);
