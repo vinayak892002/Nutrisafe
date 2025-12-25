@@ -411,7 +411,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript">
 
-  
+
 
     document.addEventListener("DOMContentLoaded", function () {
       const userId = sessionStorage.getItem('id');
@@ -443,19 +443,19 @@
           document.getElementById('userphone').textContent = data.phone || "N/A";
           document.getElementById('user-gender').textContent = data.gender || "N/A";
           document.getElementById('address').textContent = data.address || "N/A";
-         
+
 
           // document.getElementById('user-phone').textContent = data.contact ? data.contact : "N/A";
           if (data.gender === "female") {
-      document.getElementById('profile-image').src = 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-4-1024.png';
-      console.log("Female profile image loaded") ;
-    } else {
-      document.getElementById('profile-image').src = "https://bootdey.com/img/Content/avatar/avatar7.png";
-      console.log("Default profile image loaded");
-    }
+            document.getElementById('profile-image').src = 'https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-female-4-1024.png';
+            console.log("Female profile image loaded");
+          } else {
+            document.getElementById('profile-image').src = "https://bootdey.com/img/Content/avatar/avatar7.png";
+            console.log("Default profile image loaded");
+          }
 
           // Handle profile image
-         
+
         })
         .catch(error => {
           console.error('Error fetching user data:', error);
@@ -464,14 +464,37 @@
     document.getElementById('l').addEventListener('click', function (event) {
       event.preventDefault();
 
-      // Set sessionActive to false before clearing session storage
-      sessionStorage.setItem('sessionActive', 'false');
+      // Get username from session storage
+      const username = sessionStorage.getItem('username');
+      console.log('Username from sessionStorage:', username);
 
-      // Clear all session storage items
-      sessionStorage.clear();
+      // Call the logout API to delete all user_details records
+      fetch('http://localhost:3000/api/out', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: username || '' })
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Logout API response:', data);
 
-      // Redirect to the login page
-      window.location.href = '/Nutrisafe/Frontend/login.html';
+          // After API call, clear session storage
+          sessionStorage.setItem('sessionActive', 'false');
+          sessionStorage.clear();
+
+          // Redirect to the login page
+          window.location.href = 'login.html';
+        })
+        .catch(error => {
+          console.error('Error calling logout API:', error);
+
+          // Even if API fails, still clear session and redirect
+          sessionStorage.setItem('sessionActive', 'false');
+          sessionStorage.clear();
+          window.location.href = 'login.html';
+        });
     });
   </script>
 

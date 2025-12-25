@@ -426,14 +426,37 @@
         document.getElementById('l').addEventListener('click', function (event) {
             event.preventDefault();
 
-            // Set sessionActive to false before clearing session storage
-            sessionStorage.setItem('sessionActive', 'false');
+            // Get username from session storage
+            const username = sessionStorage.getItem('username');
+            console.log('Username from sessionStorage:', username);
 
-            // Clear all session storage items
-            sessionStorage.clear();
+            // Call the logout API to delete all user_details records
+            fetch('http://localhost:3000/api/out', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username || '' })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Logout API response:', data);
 
-            // Redirect to the login page
-            window.location.href = '/Frontend/login.html';
+                    // After API call, clear session storage
+                    sessionStorage.setItem('sessionActive', 'false');
+                    sessionStorage.clear();
+
+                    // Redirect to the login page
+                    window.location.href = 'login.html';
+                })
+                .catch(error => {
+                    console.error('Error calling logout API:', error);
+
+                    // Even if API fails, still clear session and redirect
+                    sessionStorage.setItem('sessionActive', 'false');
+                    sessionStorage.clear();
+                    window.location.href = 'login.html';
+                });
         });
 
     </script>

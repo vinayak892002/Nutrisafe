@@ -284,9 +284,9 @@
 
               restaurantElement.innerHTML = `
             <div class="blog-entry align-self-stretch d-md-flex">
-              <a href="${restaurant.shopLink}" class="block-20" style="background-image: url('${restaurant.image}'); background-color:black; border-radius: 20px;"></a>
+              <a href="menu.html?shop=${encodeURIComponent(restaurant.name)}" class="block-20" style="background-image: url('${restaurant.image}'); background-color:black; border-radius: 20px;"></a>
               <div class="text d-block pl-md-4" style="padding-top: 20px;">
-                <h3 class="heading"><a href="${restaurant.shopLink}">${restaurant.name}</a></h3>
+                <h3 class="heading"><a href="menu.html?shop=${encodeURIComponent(restaurant.name)}">${restaurant.name}</a></h3>
                 <p class="restaurant-address"><i class="fas fa-map-marker-alt mr-2"></i>${restaurant.address}</p>
                 <p class="restaurant-opening-time">Opens: ${restaurant.open}</p>
                 <p class="restaurant-contact">Contact No: ${restaurant.contact}</p>
@@ -314,15 +314,39 @@
     document.getElementById('l').addEventListener('click', function (event) {
       event.preventDefault();
 
-      // Set sessionActive to false before clearing session storage
-      sessionStorage.setItem('sessionActive', 'false');
+      // Get username from session storage
+      const username = sessionStorage.getItem('username');
+      console.log('Username from sessionStorage:', username);
 
-      // Clear all session storage items
-      sessionStorage.clear();
+      // Call the logout API to delete all user_details records
+      fetch('http://localhost:3000/api/out', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: username || '' })
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Logout API response:', data);
 
-      // Redirect to the login page
-      window.location.href = '/Frontend/login.html';
+          // After API call, clear session storage
+          sessionStorage.setItem('sessionActive', 'false');
+          sessionStorage.clear();
+
+          // Redirect to the login page
+          window.location.href = 'login.html';
+        })
+        .catch(error => {
+          console.error('Error calling logout API:', error);
+
+          // Even if API fails, still clear session and redirect
+          sessionStorage.setItem('sessionActive', 'false');
+          sessionStorage.clear();
+          window.location.href = 'login.html';
+        });
     });
+
 
 
 

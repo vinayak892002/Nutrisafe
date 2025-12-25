@@ -550,7 +550,7 @@
 
 		</div>
 	</footer>
-	
+
 
 	<!-- loader -->
 	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
@@ -578,15 +578,15 @@
 	<script src="js/main.js"></script>
 
 	<script>
-		  document.addEventListener("DOMContentLoaded", function () {
-      const userId = sessionStorage.getItem('id');
+		document.addEventListener("DOMContentLoaded", function () {
+			const userId = sessionStorage.getItem('id');
 
-      if (!userId) {
-        console.error('No user ID found in session storage.');
-        window.location.href = 'login.html';
-        return;
-      }
-	});
+			if (!userId) {
+				console.error('No user ID found in session storage.');
+				window.location.href = 'login.html';
+				return;
+			}
+		});
 		document.getElementById('subscribe-form').addEventListener('submit', function (e) {
 			e.preventDefault();
 
@@ -623,14 +623,37 @@
 		document.getElementById('l').addEventListener('click', function (event) {
 			event.preventDefault();
 
-			// Set sessionActive to false before clearing session storage
-			sessionStorage.setItem('sessionActive', 'false');
+			// Get username from session storage
+			const username = sessionStorage.getItem('username');
+			console.log('Username from sessionStorage:', username);
 
-			// Clear all session storage items
-			sessionStorage.clear();
+			// Call the logout API to delete all user_details records
+			fetch('http://localhost:3000/api/out', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ username: username})
+			})
+				.then(response => response.json())
+				.then(data => {
+					console.log('Logout API response:', data);
 
-			// Redirect to the login page
-			window.location.href = '/Nutrisafe/Frontend/login.html';
+					// After API call, clear session storage
+					sessionStorage.setItem('sessionActive', 'false');
+					sessionStorage.clear();
+
+					// Redirect to the login page
+					window.location.href = 'login.html';
+				})
+				.catch(error => {
+					console.error('Error calling logout API:', error);
+
+					// Even if API fails, still clear session and redirect
+					sessionStorage.setItem('sessionActive', 'false');
+					sessionStorage.clear();
+					window.location.href = 'login.html';
+				});
 		});
 
 		// jssadj
